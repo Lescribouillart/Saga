@@ -6,6 +6,179 @@
     <title>Jeu du Tableau à Poudlard</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../css/dialogue.css">
+    
+    <style>
+        /* Styles pour la fenêtre modale de chargement */
+        .loading-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-modal-content {
+            width: 90%;
+            max-width: 600px;
+            height: 80%;
+            max-height: 500px;
+            background: linear-gradient(135deg, #0a1330, #1a2040, #2a3050);
+            border: 3px solid #d4af37;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: url('../images/illustration/lemur.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px;
+        }
+
+        .loading-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 19, 48, 0.7);
+            border-radius: 12px;
+        }
+
+        .loading-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 500px;
+            padding: 40px 20px;
+            color: #f4e4c1;
+            font-family: 'Georgia', serif;
+        }
+
+        .loading-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            color: #d4af37;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(212, 175, 55, 0.5); }
+            to { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.8), 0 0 30px rgba(212, 175, 55, 0.6); }
+        }
+
+        .loading-subtitle {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .progress-container {
+            width: 100%;
+            max-width: 350px;
+            height: 18px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            margin: 30px auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #ffd700, #d4af37);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 6px;
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .progress-text {
+            margin-top: 15px;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .loading-dots::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60% { content: '...'; }
+            80%, 100% { content: ''; }
+        }
+
+        .magic-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #d4af37;
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+            opacity: 0.7;
+            box-shadow: 0 0 6px #d4af37;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(100%) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+            90% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+            100% {
+                transform: translateY(-100%) scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <canvas id="gameCanvas" width="800" height="600"></canvas>
@@ -59,12 +232,36 @@
                         </div>
                     </div>
                     
-                    <!-- Bouton Jouer - désactivé pour supprimer la fenêtre -->
+                    <!-- Bouton Jouer -->
                     <div style="text-align: center; margin-top: 20px;">
-                        <button type="button" id="playCharacter" class="btn-secondary btn-green-outline" style="cursor: url('../images/pointeur.png'), pointer;" disabled> Jouer (en développement)</button>
+                        <button type="button" id="playCharacter" class="btn-secondary btn-green-outline" style="cursor: url('../images/pointeur.png'), pointer;"> Jouer</button>
                     </div>
                 </section>
             </form>
+        </div>
+    </div>
+    
+    <!-- Fenêtre modale de chargement -->
+    <div id="loadingModal" class="loading-modal" style="cursor: url('../images/pointeur.png'), default;">
+        <div class="loading-modal-content">
+            <div class="loading-container">
+                <!-- Particules magiques -->
+                <div class="magic-particles" id="particles"></div>
+                
+                <div class="loading-content">
+                    <h1 class="loading-title">Saga WPA</h1>
+                    <p class="loading-subtitle">Préparation de votre aventure mystique...</p>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    
+                    <div class="progress-text">
+                        <span id="progressPercent">0%</span> - <span id="statusMessage">Initialisation</span>
+                        <span class="loading-dots" id="loadingDots">...</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     

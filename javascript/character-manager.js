@@ -59,42 +59,18 @@ class CharacterSheetManager {
         if (playBtn) {
             playBtn.addEventListener('click', () => {
                 this.updateCharacterFromForm();
-                if (typeof window.sagaStart === 'function') {
-                    window.sagaStart(this.character, document.getElementById('characterModal'));
-                } else {
-                    // Fallback : affiche un message dans la modal en conservant la structure
-                    const modal = document.getElementById('characterModal');
-                    modal.innerHTML = `
-                        <div class="character-sheet" style="background-image: url('../images/illustration/lemur.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-                            <div class="character-header" style="border: none;">
-                                <button id="closeModal" class="close-btn">&times;</button>
-                            </div>
-                            <div style="padding: 30px; text-align: center; color: #f5deb3; background: rgba(0, 0, 0, 0.7); border-radius: 10px; margin: 20px;">
-                                <h1 style="color: #28a745; margin-bottom: 30px;">Bienvenue ${this.character.name ? this.character.name : 'Aventurier'}</h1>
-                                <div style="background: rgba(34, 109, 84, 0.4); border: 1px solid #226d54; border-radius: 8px; padding: 20px; margin: 20px 0;">
-                                    <p><strong>Type :</strong> ${this.character.type || '-'}</p>
-                                    <p><strong>Classe :</strong> ${this.character.class || '-'}</p>
-                                    <p><strong>Divinité :</strong> ${this.character.deity || '-'}</p>
-                                </div>
-                                <div style="margin-top: 30px;">
-                                    <button type="button" id="backToCharacter" class="btn-secondary">Retour à la fiche</button>
-                                    <button type="button" id="startGame" class="btn-primary">Commencer l'aventure</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    
-                    // Réattacher les événements pour les nouveaux boutons
-                    document.getElementById('closeModal').addEventListener('click', () => this.closeModal());
-                    document.getElementById('backToCharacter').addEventListener('click', () => {
-                        // Recharger la page pour revenir à la fiche personnage
-                        location.reload();
-                    });
-                    document.getElementById('startGame').addEventListener('click', () => {
-                        // Ici vous pouvez ajouter la logique pour démarrer le jeu
-                        alert('Le jeu va bientôt commencer !');
-                    });
+                
+                // Vérifier que les champs requis sont remplis
+                if (!this.character.name || !this.character.type || !this.character.class || !this.character.deity) {
+                    alert('Veuillez remplir tous les champs avant de jouer.');
+                    return;
                 }
+                
+                // Fermer la modale du personnage
+                this.closeModal();
+                
+                // Afficher la fenêtre modale de chargement
+                this.showLoadingModal();
             });
         }
     }
@@ -109,6 +85,91 @@ class CharacterSheetManager {
         const modal = document.getElementById('characterModal');
         modal.classList.remove('show');
         document.body.style.overflow = 'auto';
+    }
+
+    showLoadingModal() {
+        const loadingModal = document.getElementById('loadingModal');
+        loadingModal.classList.add('show');
+        
+        // Démarrer l'animation de chargement
+        this.startLoadingAnimation();
+    }
+
+    hideLoadingModal() {
+        const loadingModal = document.getElementById('loadingModal');
+        loadingModal.classList.remove('show');
+        document.body.style.overflow = 'auto';
+    }
+
+    startLoadingAnimation() {
+        let progress = 0;
+        const progressBar = document.getElementById('progressBar');
+        const progressPercent = document.getElementById('progressPercent');
+        const statusMessage = document.getElementById('statusMessage');
+        
+        const loadingMessages = [
+            "Initialisation de la magie...",
+            "Chargement des sorts anciens...",
+            "Préparation du monde mystique...",
+            "Invocation des créatures...",
+            "Activation des portails...",
+            "Finalisation des enchantements...",
+            "Prêt pour l'aventure !"
+        ];
+        
+        // Créer des particules magiques
+        this.createLoadingParticles();
+        
+        // Animation du chargement
+        const updateProgress = () => {
+            if (progress <= 100) {
+                progressBar.style.width = progress + '%';
+                progressPercent.textContent = Math.floor(progress) + '%';
+                
+                // Changer le message selon le progrès
+                const messageIndex = Math.min(Math.floor(progress / 15), loadingMessages.length - 1);
+                statusMessage.textContent = loadingMessages[messageIndex];
+                
+                progress += Math.random() * 3 + 0.5; // Vitesse variable pour plus de réalisme
+                
+                if (progress >= 100) {
+                    setTimeout(() => {
+                        statusMessage.textContent = "Chargement terminé ! Démarrage du jeu...";
+                        setTimeout(() => {
+                            this.hideLoadingModal();
+                            // Ici vous pouvez ajouter la logique pour démarrer le jeu
+                            this.startGame();
+                        }, 1500);
+                    }, 500);
+                } else {
+                    setTimeout(updateProgress, 100 + Math.random() * 200);
+                }
+            }
+        };
+        
+        setTimeout(updateProgress, 500); // Petit délai avant de commencer
+    }
+
+    createLoadingParticles() {
+        const particlesContainer = document.getElementById('particles');
+        // Nettoyer les anciennes particules
+        particlesContainer.innerHTML = '';
+        
+        for (let i = 0; i < 12; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 6 + 's';
+            particle.style.animationDuration = (4 + Math.random() * 4) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    }
+
+    startGame() {
+        // Pour l'instant, afficher un message de succès
+        // Plus tard, vous pourrez rediriger vers la vraie interface de jeu
+        alert(`Bienvenue dans votre aventure, ${this.character.name} ! Le jeu va commencer...`);
+        console.log('Personnage créé:', this.character);
     }
 
     updateCharacterFromForm() {
@@ -156,16 +217,4 @@ class CharacterSheetManager {
 // Initialisation globale
 document.addEventListener('DOMContentLoaded', () => {
     window.characterSheetManager = new CharacterSheetManager();
-
-    // Désactiver le bouton Jouer pour éviter l'affichage de la fenêtre
-    const playButton = document.getElementById('playCharacter');
-    if (playButton) {
-        // Supprimer tous les événements existants
-        playButton.onclick = null;
-        playButton.removeEventListener('click', showCharacterSummary);
-        
-        // Désactiver le bouton
-        playButton.disabled = true;
-        playButton.textContent = 'Jouer (en développement)';
-    }
 });
