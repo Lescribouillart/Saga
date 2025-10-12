@@ -120,8 +120,7 @@ class CharacterSheetManager {
                 if (progress >= 100) {
                     setTimeout(() => {
                         setTimeout(() => {
-                            this.hideLoadingModal();
-                            // Ici vous pouvez ajouter la logique pour démarrer le jeu
+                            // Démarrer le jeu directement sans fermer la fenêtre
                             this.startGame();
                         }, 800); // Réduit de 1500ms à 800ms
                     }, 300); // Réduit de 500ms à 300ms
@@ -150,10 +149,146 @@ class CharacterSheetManager {
     }
 
     startGame() {
-        // Pour l'instant, afficher un message de succès
-        // Plus tard, vous pourrez rediriger vers la vraie interface de jeu
-        alert(`Bienvenue dans votre aventure, ${this.character.name} ! Le jeu va commencer...`);
-        console.log('Personnage créé:', this.character);
+        // Remplacer le contenu de la fenêtre modale par l'interface de jeu
+        const loadingModal = document.getElementById('loadingModal');
+        loadingModal.innerHTML = this.createGameInterface();
+        
+        // Initialiser le jeu
+        this.initializeGame();
+        console.log('Jeu démarré pour:', this.character);
+    }
+
+    createGameInterface() {
+        return `
+            <div class="game-container">
+                <div class="game-header">
+                    <h2>SAGA - Appartement de ${this.character.name}</h2>
+                    <p>Vous vous réveillez dans votre salon... Que s'est-il passé après avoir traversé le tableau ?</p>
+                </div>
+                
+                <div class="apartment-container" id="apartment">
+                    <!-- Salon (point de départ) -->
+                    <div class="room salon" id="salon">
+                        <div class="room-label">Salon</div>
+                        <div class="furniture sofa"></div>
+                        <div class="furniture tv"></div>
+                        <div class="furniture coffee-table"></div>
+                    </div>
+                    
+                    <!-- Chambre -->
+                    <div class="room bedroom" id="chambre">
+                        <div class="room-label">Chambre</div>
+                        <div class="furniture bed"></div>
+                        <div class="furniture wardrobe"></div>
+                    </div>
+                    
+                    <!-- Cuisine -->
+                    <div class="room kitchen" id="cuisine">
+                        <div class="room-label">Cuisine</div>
+                        <div class="furniture counter"></div>
+                        <div class="furniture fridge"></div>
+                    </div>
+                    
+                    <!-- Salle de bain -->
+                    <div class="room bathroom" id="salle-de-bain">
+                        <div class="room-label">Salle de bain</div>
+                        <div class="furniture bathtub"></div>
+                        <div class="furniture sink"></div>
+                    </div>
+                    
+                    <!-- Balcon -->
+                    <div class="room balcony" id="balcon">
+                        <div class="room-label">Balcon</div>
+                        <div class="furniture railing"></div>
+                    </div>
+                    
+                    <!-- Personnage -->
+                    <div class="character" id="player">
+                        <div class="character-sprite">🧙‍♂️</div>
+                    </div>
+                </div>
+                
+                <div class="game-ui">
+                    <button id="closeGame" class="btn-secondary">Quitter le jeu</button>
+                </div>
+            </div>
+        `;
+    }
+
+    initializeGame() {
+        // Variables du jeu
+        this.playerPosition = { x: 250, y: 200 }; // Position initiale dans le salon
+        this.isMoving = false;
+        
+        // Référence aux éléments
+        this.player = document.getElementById('player');
+        this.apartment = document.getElementById('apartment');
+        
+        // Placer le joueur à la position initiale
+        this.updatePlayerPosition();
+        
+        // Gestionnaires d'événements
+        this.apartment.addEventListener('click', (e) => this.movePlayer(e));
+        document.getElementById('closeGame').addEventListener('click', () => this.closeGame());
+    }
+
+    movePlayer(event) {
+        if (this.isMoving) return;
+        
+        const rect = this.apartment.getBoundingClientRect();
+        const targetX = event.clientX - rect.left - 15; // -15 pour centrer le personnage
+        const targetY = event.clientY - rect.top - 15;
+        
+        // Vérifier si la position est valide (pas sur un meuble)
+        if (this.isValidPosition(targetX, targetY)) {
+            this.animatePlayerMovement(targetX, targetY);
+        }
+    }
+
+    isValidPosition(x, y) {
+        // Vérification basique des limites de l'appartement
+        const apartmentRect = this.apartment.getBoundingClientRect();
+        return x >= 0 && x <= apartmentRect.width - 30 && 
+               y >= 0 && y <= apartmentRect.height - 30;
+    }
+
+    animatePlayerMovement(targetX, targetY) {
+        this.isMoving = true;
+        const startX = this.playerPosition.x;
+        const startY = this.playerPosition.y;
+        const distance = Math.sqrt((targetX - startX) ** 2 + (targetY - startY) ** 2);
+        const duration = Math.min(distance * 2, 1000); // Vitesse proportionnelle à la distance
+        
+        const startTime = performance.now();
+        
+        const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Interpolation linéaire
+            this.playerPosition.x = startX + (targetX - startX) * progress;
+            this.playerPosition.y = startY + (targetY - startY) * progress;
+            
+            this.updatePlayerPosition();
+            
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                this.isMoving = false;
+            }
+        };
+        
+        requestAnimationFrame(animate);
+    }
+
+    updatePlayerPosition() {
+        this.player.style.left = this.playerPosition.x + 'px';
+        this.player.style.top = this.playerPosition.y + 'px';
+    }
+
+    closeGame() {
+        // Fermer la fenêtre de jeu et revenir à l'écran principal
+        this.hideLoadingModal();
     }
 
     updateCharacterFromForm() {
