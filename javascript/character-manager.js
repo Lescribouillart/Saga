@@ -105,17 +105,6 @@ class CharacterSheetManager {
         let progress = 0;
         const progressBar = document.getElementById('progressBar');
         const progressPercent = document.getElementById('progressPercent');
-        const statusMessage = document.getElementById('statusMessage');
-        
-        const loadingMessages = [
-            "Initialisation de la magie...",
-            "Chargement des sorts anciens...",
-            "Préparation du monde mystique...",
-            "Invocation des créatures...",
-            "Activation des portails...",
-            "Finalisation des enchantements...",
-            "Prêt pour l'aventure !"
-        ];
         
         // Créer des particules magiques
         this.createLoadingParticles();
@@ -126,15 +115,10 @@ class CharacterSheetManager {
                 progressBar.style.width = progress + '%';
                 progressPercent.textContent = Math.floor(progress) + '%';
                 
-                // Changer le message selon le progrès
-                const messageIndex = Math.min(Math.floor(progress / 15), loadingMessages.length - 1);
-                statusMessage.textContent = loadingMessages[messageIndex];
-                
                 progress += Math.random() * 3 + 0.5; // Vitesse variable pour plus de réalisme
                 
                 if (progress >= 100) {
                     setTimeout(() => {
-                        statusMessage.textContent = "Chargement terminé ! Démarrage du jeu...";
                         setTimeout(() => {
                             this.hideLoadingModal();
                             // Ici vous pouvez ajouter la logique pour démarrer le jeu
