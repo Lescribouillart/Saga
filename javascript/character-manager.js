@@ -167,41 +167,6 @@ class CharacterSheetManager {
                 </div>
                 
                 <div class="apartment-container" id="apartment">
-                    <!-- Salon (point de départ) -->
-                    <div class="room salon" id="salon">
-                        <div class="room-label">Salon</div>
-                        <div class="furniture sofa"></div>
-                        <div class="furniture tv"></div>
-                        <div class="furniture coffee-table"></div>
-                    </div>
-                    
-                    <!-- Chambre -->
-                    <div class="room bedroom" id="chambre">
-                        <div class="room-label">Chambre</div>
-                        <div class="furniture bed"></div>
-                        <div class="furniture wardrobe"></div>
-                    </div>
-                    
-                    <!-- Cuisine -->
-                    <div class="room kitchen" id="cuisine">
-                        <div class="room-label">Cuisine</div>
-                        <div class="furniture counter"></div>
-                        <div class="furniture fridge"></div>
-                    </div>
-                    
-                    <!-- Salle de bain -->
-                    <div class="room bathroom" id="salle-de-bain">
-                        <div class="room-label">Salle de bain</div>
-                        <div class="furniture bathtub"></div>
-                        <div class="furniture sink"></div>
-                    </div>
-                    
-                    <!-- Balcon -->
-                    <div class="room balcony" id="balcon">
-                        <div class="room-label">Balcon</div>
-                        <div class="furniture railing"></div>
-                    </div>
-                    
                     <!-- Personnage -->
                     <div class="character" id="player">
                         <div class="character-sprite">🧙‍♂️</div>
@@ -217,7 +182,7 @@ class CharacterSheetManager {
 
     initializeGame() {
         // Variables du jeu
-        this.playerPosition = { x: 250, y: 200 }; // Position initiale dans le salon
+        this.playerPosition = { x: 400, y: 300 }; // Position initiale au centre de l'appartement
         this.isMoving = false;
         
         // Référence aux éléments
