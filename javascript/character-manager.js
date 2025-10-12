@@ -115,7 +115,7 @@ class CharacterSheetManager {
                 progressBar.style.width = progress + '%';
                 progressPercent.textContent = Math.floor(progress) + '%';
                 
-                progress += Math.random() * 3 + 0.5; // Vitesse variable pour plus de réalisme
+                progress += Math.random() * 8 + 2; // Vitesse plus rapide (était 3 + 0.5)
                 
                 if (progress >= 100) {
                     setTimeout(() => {
@@ -123,10 +123,10 @@ class CharacterSheetManager {
                             this.hideLoadingModal();
                             // Ici vous pouvez ajouter la logique pour démarrer le jeu
                             this.startGame();
-                        }, 1500);
-                    }, 500);
+                        }, 800); // Réduit de 1500ms à 800ms
+                    }, 300); // Réduit de 500ms à 300ms
                 } else {
-                    setTimeout(updateProgress, 100 + Math.random() * 200);
+                    setTimeout(updateProgress, 50 + Math.random() * 100); // Plus rapide (était 100 + 200)
                 }
             }
         };
