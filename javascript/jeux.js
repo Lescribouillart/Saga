@@ -106,21 +106,6 @@ function drawBlackLiquidSurface(ctx, x, y, width, height, time) {
 window.onload = function() {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
-    const frameHoverArea = document.getElementById('frameHoverArea');
-
-    // Variables pour le contrôle du vortex
-    let isHovering = false;
-
-    // Gestion des événements de survol sur la zone HTML
-    if (frameHoverArea) {
-        frameHoverArea.addEventListener('mouseenter', function() {
-            isHovering = true;
-        });
-
-        frameHoverArea.addEventListener('mouseleave', function() {
-            isHovering = false;
-        });
-    }
 
     // Utiliser lemur.png comme fond du jeu
     const background = new Image();
@@ -205,18 +190,8 @@ window.onload = function() {
                 const innerWidth = cadreWidth - (marginX * 2);
                 const innerHeight = cadreHeight - (marginY * 2);
                 
-                if (!isHovering) {
-                    // Fond noir simple quand on ne survole pas
-                    ctx.fillStyle = '#000000';
-                    ctx.fillRect(innerX, innerY, innerWidth, innerHeight);
-                } else {
-                    // L'effet Stargate à l'intérieur du cadre seulement si on survole
-                    drawBlackLiquidSurface(ctx, innerX, innerY, innerWidth, innerHeight, time);
-                }
-                
-                // TEST TEMPORAIRE : Afficher le vortex en permanence pour tester
-                // Décommentez la ligne suivante pour tester si le vortex fonctionne
-                // drawBlackLiquidSurface(ctx, innerX, innerY, innerWidth, innerHeight, time);
+                // Afficher l'effet vortex en permanence
+                drawBlackLiquidSurface(ctx, innerX, innerY, innerWidth, innerHeight, time);
             }
         }
 
