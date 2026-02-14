@@ -1,4 +1,11 @@
-class CharacterSheetManager {
+/* ========================================
+   LA LANTERNE - Gestionnaire de jeu
+   ======================================== */
+
+class LaLanterne {
+    /* ----------------
+       INITIALISATION
+       ---------------- */
     constructor() {
         // Personnage par défaut
         this.character = {
@@ -16,11 +23,12 @@ class CharacterSheetManager {
         this.showLoadingModal();
     }
 
+    /* --------------------------------
+       GESTION DE L'ÉCRAN DE CHARGEMENT
+       -------------------------------- */
     showLoadingModal() {
         const loadingModal = document.getElementById('loadingModal');
         loadingModal.classList.add('show');
-        
-        // Démarrer l'animation de chargement
         this.startLoadingAnimation();
     }
 
@@ -35,36 +43,35 @@ class CharacterSheetManager {
         const progressBar = document.getElementById('progressBar');
         const progressPercent = document.getElementById('progressPercent');
         
-        // Créer des particules magiques
+        // Créer les particules magiques
         this.createLoadingParticles();
         
-        // Animation du chargement
+        // Animation de la barre de progression
         const updateProgress = () => {
             if (progress <= 100) {
                 progressBar.style.width = progress + '%';
                 progressPercent.textContent = Math.floor(progress) + '%';
                 
-                progress += Math.random() * 8 + 2; // Vitesse plus rapide (était 3 + 0.5)
+                progress += Math.random() * 8 + 2;
                 
                 if (progress >= 100) {
+                    // Chargement terminé, lancer le jeu
                     setTimeout(() => {
                         setTimeout(() => {
-                            // Démarrer le jeu directement sans fermer la fenêtre
                             this.startGame();
-                        }, 800); // Réduit de 1500ms à 800ms
-                    }, 300); // Réduit de 500ms à 300ms
+                        }, 800);
+                    }, 300);
                 } else {
-                    setTimeout(updateProgress, 50 + Math.random() * 100); // Plus rapide (était 100 + 200)
+                    setTimeout(updateProgress, 50 + Math.random() * 100);
                 }
             }
         };
         
-        setTimeout(updateProgress, 500); // Petit délai avant de commencer
+        setTimeout(updateProgress, 500);
     }
 
     createLoadingParticles() {
         const particlesContainer = document.getElementById('particles');
-        // Nettoyer les anciennes particules
         particlesContainer.innerHTML = '';
         
         for (let i = 0; i < 12; i++) {
@@ -77,12 +84,13 @@ class CharacterSheetManager {
         }
     }
 
+    /* --------------------------------
+       CRÉATION DE L'INTERFACE DE JEU
+       -------------------------------- */
     startGame() {
-        // Remplacer le contenu de la fenêtre modale par l'interface de jeu
         const loadingModal = document.getElementById('loadingModal');
         loadingModal.innerHTML = this.createGameInterface();
         
-        // Initialiser le jeu
         this.initializeGame();
         console.log('Jeu démarré pour:', this.character);
     }
@@ -96,7 +104,6 @@ class CharacterSheetManager {
                 </div>
                 
                 <div class="apartment-container" id="apartment">
-                    <!-- Personnage -->
                     <div class="character" id="player">
                         <div class="character-sprite">🧙‍♂️</div>
                     </div>
@@ -111,14 +118,14 @@ class CharacterSheetManager {
 
     initializeGame() {
         // Variables du jeu
-        this.playerPosition = { x: 400, y: 300 }; // Position initiale au centre de l'appartement
+        this.playerPosition = { x: 400, y: 300 };
         this.isMoving = false;
         
-        // Référence aux éléments
+        // Références aux éléments DOM
         this.player = document.getElementById('player');
         this.apartment = document.getElementById('apartment');
         
-        // Placer le joueur à la position initiale
+        // Positionner le joueur
         this.updatePlayerPosition();
         
         // Gestionnaires d'événements
@@ -126,21 +133,22 @@ class CharacterSheetManager {
         document.getElementById('closeGame').addEventListener('click', () => this.closeGame());
     }
 
+    /* ----------------------------------
+       GESTION DU MOUVEMENT DU PERSONNAGE
+       ---------------------------------- */
     movePlayer(event) {
         if (this.isMoving) return;
         
         const rect = this.apartment.getBoundingClientRect();
-        const targetX = event.clientX - rect.left - 15; // -15 pour centrer le personnage
+        const targetX = event.clientX - rect.left - 15;
         const targetY = event.clientY - rect.top - 15;
         
-        // Vérifier si la position est valide (pas sur un meuble)
         if (this.isValidPosition(targetX, targetY)) {
             this.animatePlayerMovement(targetX, targetY);
         }
     }
 
     isValidPosition(x, y) {
-        // Vérification basique des limites de l'appartement
         const apartmentRect = this.apartment.getBoundingClientRect();
         return x >= 0 && x <= apartmentRect.width - 30 && 
                y >= 0 && y <= apartmentRect.height - 30;
@@ -151,7 +159,7 @@ class CharacterSheetManager {
         const startX = this.playerPosition.x;
         const startY = this.playerPosition.y;
         const distance = Math.sqrt((targetX - startX) ** 2 + (targetY - startY) ** 2);
-        const duration = Math.min(distance * 2, 1000); // Vitesse proportionnelle à la distance
+        const duration = Math.min(distance * 2, 1000);
         
         const startTime = performance.now();
         
@@ -180,13 +188,17 @@ class CharacterSheetManager {
         this.player.style.top = this.playerPosition.y + 'px';
     }
 
+    /* -----------
+       UTILITAIRES
+       ----------- */
     closeGame() {
-        // Fermer la fenêtre de jeu et revenir à l'écran principal
         this.hideLoadingModal();
     }
 }
 
-// Initialisation globale
+/* ========================================
+   INITIALISATION GLOBALE
+   ======================================== */
 document.addEventListener('DOMContentLoaded', () => {
-    window.characterSheetManager = new CharacterSheetManager();
+    window.laLanterne = new LaLanterne();
 });
