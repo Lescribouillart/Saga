@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le trésor des fondateurs</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header-booki">
+        <div class="logo">
+            <a href="../index.html"></a>
+            <img src="../images/stylo-a-plume.png" alt="Logo " height="60">
+            </a>
+        </div>
+
+        <div class="nav-zone">
+            <nav class="nav-booki">
+                <div class="dropdown">
+                    <a href="#articles" class="dropdown-toggle" title="Les articles">
+                        <img src="../images/journal.png" alt="Journal" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les articles</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="../lesarticles/worldofwarcraft.html">World of Warcraft</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#recits" class="dropdown-toggle" title="Les récits">
+                        <img src="../images/recits.png" alt="Récits" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les récits</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-submenu">
+                            <a href="#" class="dropdown-submenu-toggle">Fanfiction <span class="arrow">▶</span></a>
+                            <div class="dropdown-submenu-content">
+                                <div class="dropdown-sub-submenu">
+                                    <a href="#" class="dropdown-sub-submenu-toggle">Harry Potter <span class="arrow">▶</span></a>
+                                    <div class="dropdown-sub-submenu-content">
+                                        <a href="../lesrecits/parapluie.html">L'invention du sortilège du parapluie</a>
+                                        <a href="../lesrecits/botaniste.html">Le journal d'un botaniste</a>
+                                        <a href="../lesrecits/flamel.html">Le journal intime de Nicolas Flamel</a>
+                                        <a href="../lesrecits/tresor-fondateurs.html">Le trésor des fondateurs</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu">
+                            <a href="#" class="dropdown-submenu-toggle">Fiction <span class="arrow">▶</span></a>
+                            <div class="dropdown-submenu-content">
+                                <a href="../lesrecits/grotte-du-loup.html">La grotte du loup</a>
+                                <a href="../lesrecits/tableau-frappeur.html">Le tableau frappeur</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#jeux" class="dropdown-toggle" title="Les jeux">
+                        <img src="../images/rpg.png" alt="RPG" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les jeux</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="">Le tableau</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        
+        <div class="header-right">
+            <!-- Champ de recherche -->
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Je cherche un article ou un récit..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            
+            <button id="dark-mode-toggle" class="dark-mode-btn">
+            <span class="sun-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+                </svg>
+            </span>
+            <span class="moon-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"/>
+                </svg>
+            </span>
+        </button>
+    </header>
+
+    <main>
+        <!-- Hero Section avec style moderne -->
+        <div class="story-hero">
+            <div class="story-hero-background">
+                <div class="story-hero-overlay"></div>
+                <img src="../images/tresor.jpg" alt="Le trésor des fondateurs" class="story-hero-image flamel-image">
+            </div>
+            <div class="story-hero-content">
+                <div class="story-header-line">
+                    <div class="story-meta">
+                        <span class="story-date">Le 19 juillet 2025</span>
+                        <span class="story-separator">par</span>
+                        <span class="story-author">Drelall</span>
+                    </div>
+                    <h1 class="story-title">Le trésor des fondateurs</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenu principal de l'article -->
+        <article class="story-content">
+            <!-- Page 1 de navigation : contient les textes 1, 2, 3, 4 du livre -->
+            <div class="story-page active">
+                <div class="page-content">
+                    <!-- Texte 1 -->
+                    <div class="story-section">
+                        <h2>∼ Le Charivari Circus ∼</h2>
+                        <p><strong>Prologue :</strong> <i>le dimanche 2 octobre 1989, fin de soirée.</i></p>
+                        <p>À bord du Diligent, deux hommes s’affairaient. L'intérieur qui ressemblait à une simple écurie était jonché de box et de petits enclos. Le plus grand des deux, s'occupait de déplacer des malles remplies de matériels de spectacle. Et de tout le trajet, il n'avait cessé de donner des ordres ce qui agaçait le deuxième au plus haut point.</p>
+                        
+                        <p>- Tino ! Dit Pike sans aucune retenue. Ajoute des feuilles d’acacia pour ces deux-là !
+Tino était le plus jeune des deux. Il était aussi le plus malin. Mais son courage lui faisait défaut, c'est pour cette raison qu'il traînait toujours avec Pike.</p>
+                        <p>- Pas moyen que je m'approche d'elles... Elles me font trop flipper... Il détourna la tête, puis avec sa main gauche il enfonça son chapeau pour se cacher les yeux. Soudain, surpris par un bruit qui avait surgi derrière lui. Il fit volte-face quand la porte coulissa avec virulence. Dans la foulée, une femme de forte taille déboula dans la pièce.</p>
+                        <p>- Qu'est-ce que vous faites tous les deux !? Vociféra Lavinia. Dépêchez-vous ! On s'occupera de la ménagerie plus tard ! En réaction à cette intrusion, Pike se tortilla comme si on l'avait essoré à main nue. Puis il répliqua avec prudence.</p>
+                        <p>- Les wagons 3 et 4 sont faits Boss... Il manque plus que celui-là... Elle fit un geste de la main, pour signifier qu'il devait arrêter ce qu'il faisait.</p>
+                        <p>- Laissez les Elfes de Maison s'occuper de ça... J'ai besoin de vous à l'avant du train. Les deux hommes arrêtèrent leur besogne, et ils sortirent rapidement du wagon. La patronne du Charivari Circus s'avança lentement.
+Et vous... La voix de Lavinia prit un ton amer. Toujours à mâcher des tonnes d'eucalyptus hein ? Elle s'approcha du box. Je me demande encore pourquoi je vous garde ici avec moi ? Il y eut de fortes respirations et quelques coups de sabot. Une fois que tout ça sera fini. Toutes les deux, vous rejoindrez vos frères et sœurs dans la Forêt Interdite. Sa bouche se tordit en un sourire mesquin. Mais pas avant notre dernier show mes jolies !</p>
+                        
+                        <p>Un long panache de fumée s’échappait de l'avant de la locomotive. Celle-ci filait à toute vitesse dans les Highlands. Le long de ce convoi fait de taule et d'acier, on entendait claquer la chambrière qui s’abattait au sommet de la machine. Le chauffeur qui avait un poste de conduite surélevé se déchaînait sur le morceau de métal. La boîte à feu se cambrait d'avant en arrière, à la manière de chevaux qui reprennent leurs galops. Cette manœuvre avait pour effet de relâcher des gerbes d'étincelles à chaque fois que les roues reprenaient contact avec les rails.
+Quelques minutes plus tard, Pike et Tino venaient de rentrer dans la salle des machines. Le cochet qui se prénommait Rolf se trouvait juste au-dessus.</p>
+                        
+                        <p>- On va leurs donner deux trois bottes de foin, histoire de terminer le voyage. Tino jeta une première botte qui se fit immédiatement dévorer après avoir passé la trappe.</p>
+                        <p>- Pourquoi on n'y met pas du charbon comme dans tous les trains normaux ? Une voix résonna du haut du poste de pilotage. Rolf avait mis la pointe de sa baguette contre sa carotide.</p>
+                        <p>- Parce que ce n'est pas une foutue machine ! C'est juste le résultat d'une expérience qui a mal tourné. Comme tout le reste ici ! Il prit une intonation beaucoup plus tranchante presque sifflante. Si je te vois encore mettre du charbon dans le ventre de la bête. Tu feras le reste du chemin à pied, comme le stupide cracmol que tu es ! Le visage de Pike se tordit en une grimace grinçante, comme si le pilote lui avait rappelé un mauvais souvenir.</p>
+                        <p>- Pousse-toi ! Je vais mettre le reste. Pike bouscula Tino, puis il prit les deux dernières recharges sous chaque bras. Le jeune homme lui emboîta le pas.</p>
+                        <p>- Ajoute aussi quelques pommes... Le supplia-t-il. Ça va leurs faire plaisir après tout ces kilomètres depuis Paris..</p>
+                        <p>- Il faudrait savoir qu'elle genre de monstre tu apprécies Tino. Pike eut un sourire moqueur. Parce que là, j'ai plutôt du mal à te suivre.</p>
+                        <p>Lavinia Balagan était la sœur ainé de Loyal Balagan. Tous les deux étaient les propriétaires du cirque itinérant pour sorcier "Le Charivari Circus". Loyal et Lavinia avait mobilisé une grande partie de leurs moyens pour se rendre à Poudlard. Dans l'incompréhension générale, ils s'étaient éloignés de plusieurs centaines de kilomètres de leur parcours habituel. Quelles étaient les raisons de ce revirement soudain ? Loyal Balagan c'était exprimé à ce sujet " Poudlard est une occasion en or pour nous, une occasion à ne pas rater ! ".
+Des crissements retentirent de chaque côté du train. Celui-ci ralentissait, quelques secousses se firent sentir et il s'engouffra dans un canyon qui décrivait un passage aux virages serrés. Une fois de plus, Lavinia passa les portes entre deux compartiments afin d'accéder à la salle des machines.</p>
+                        <p>- Rolf ! Dit elle en aboyant. J'ai envoyé une cigogne pour les prévenir de notre arrivé. Elle avait levé la tête en direction du poste de pilotage. Juste après, une voix résonna dans la pièce.</p>
+                        <p>- Bien reçu !</p>
+                        <p>À quelques dizaines de kilomètres, l'aiguille de l'horloge en gare de Pré-Au-Lard indiquait 22h30. Ce dimanche soir, les quais étaient déserts. Pourtant, le chef de gare se tenait là droit comme un I. Ça montre à gousset à l'intérieur de sa paume. Il affichait un regard impassible en fixant l'horizon.</p>
+                        
+                        
+                        <p class="text-indicator">— 1 —</p>
+
+                    </div>
+
+                   
+                    <div class="story-section">
+                        <h2>∼ Chapitre 1 : La belle, la brute et le sanglant ∼</h2>
+
+                        <p class="text-indicator">— 2 —</p>
+
+                    </div>
+
+                    
+                    <div class="story-section">
+                        <h2>∼ La belle, la brute et le sanglant ∼</h2>
+                        <p class="text-indicator"></p>
+                    </div>
+
+                  
+                    <div class="story-section">
+                        <h2>∼ La belle, la brute et le sanglant ∼</h2>
+                        <p class="text-indicator"></p>
+                    </div>
+                </div>
+            </div>
+            
+           
+            <div class="story-page">
+                <div class="page-content">
+                   
+                    <div class="story-section">
+                        <h2>∼ La belle, la brute et le sanglant  ∼</h2>
+                        <p class="text-indicator"></p>
+                    </div>
+
+                   
+                    <div class="story-section">
+                        <h2>∼ La belle, la brute et le sanglant ∼</h2>
+                        <p class="text-indicator"></p>
+                    </div>
+
+                   
+                    <div class="story-section">
+                        <h2>∼ Chapitre 2 : Pour quelques Gallions de plus ∼</h2>
+                        <p class="text-indicator"></p>
+                    </div>
+
+                    
+                    <div class="story-section">
+                        <h2>∼ Pour quelques Gallions de plus ∼</h2>
+                        <p class="text-indicator"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Page 3 de navigation : contient le texte 9 du livre -->
+            <div class="story-page">
+                <div class="page-content">
+                    <!-- Texte 9 -->
+                    <div class="story-section">
+                        <h2>∼ Pour quelques Gallions de plus ∼</h2>
+                        <p class="text-indicator"></p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Contrôles de pagination -->
+        <div class="pagination-controls">
+            <button class="pagination-btn" id="prevBtn">
+                <span>←</span> Précédent
+            </button>
+            <div class="page-indicator">
+                Page <span id="currentPage">1</span> sur <span id="totalPages">3</span>
+            </div>
+            <button class="pagination-btn" id="nextBtn">
+                Suivant <span>→</span>
+            </button>
+        </div>
+        <div class="keyboard-hint">
+            Utilisez les flèches ← → de votre clavier pour naviguer
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <a href="mailto:jacques.bobbio@outlook.fr" class="contact-btn">Me contacter</a>
+            </div>
+        </div>
+    </footer>
+    <script src="../carousel/scrypt.js"></script>
+    <script src="../javascript/story-pagination.js"></script>
+</body>
+</html>

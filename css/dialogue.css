@@ -1,0 +1,147 @@
+#dialogue-box {
+    position: fixed;
+    top: auto; /* Enlever le positionnement en haut */
+    bottom: 150px; /* Position depuis le bas */
+    left: 50%;
+    transform: translateX(-50%) scale(0.8); /* Centrer seulement horizontalement */
+    width: 80%;
+    max-width: 600px;
+    background: linear-gradient(135deg, #2c1810, #4a2c1a);
+    border: 3px solid #8b6914;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-family: 'Cinzel', serif;
+    color: #f4e4bc;
+}
+
+#dialogue-box.show {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+#dialogue-box.hide {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+}
+
+.dialogue-character {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 15px;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.dialogue-text {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: justify;
+    min-height: 100px;
+    white-space: pre-wrap;
+}
+
+.dialogue-continue {
+    text-align: center;
+    font-size: 14px;
+    color: #8b6914;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+    font-style: italic;
+}
+
+.dialogue-continue:hover {
+    color: #ffd700;
+}
+
+/* Animation de pulsation pour attirer l'attention */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.character-clickable {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.character-clickable:hover {
+    transform: scale(1.1);
+    animation: pulse 2s infinite;
+}
+
+.character-clickable {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.character-clickable:hover {
+    transform: scale(1.1);
+    animation: pulse 2s infinite;
+}
+
+/* Effets magiques pour la carte du sorcier */
+.magic-card-container {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
+.magic-card {
+    position: relative;
+    border: 2px solid #ffd700;
+    margin: 0 auto;
+    box-shadow: 
+        0 0 15px rgba(255, 215, 0, 0.3),
+        0 0 25px rgba(255, 215, 0, 0.2),
+        inset 0 0 15px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    animation: magicGlow 2s ease-in-out infinite alternate;
+}
+
+.magic-card:hover {
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.4),
+        0 0 35px rgba(255, 215, 0, 0.3),
+        0 0 45px rgba(138, 43, 226, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    animation: magicPulse 0.8s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes magicGlow {
+    0% { 
+        box-shadow: 
+            0 0 15px rgba(255, 215, 0, 0.3),
+            0 0 25px rgba(255, 215, 0, 0.2);
+    }
+    100% { 
+        box-shadow: 
+            0 0 20px rgba(255, 215, 0, 0.4),
+            0 0 30px rgba(138, 43, 226, 0.25);
+    }
+}
+
+@keyframes magicPulse {
+    0%, 100% { transform: scale(1.05) rotate(1deg); }
+    50% { transform: scale(1.1) rotate(-1deg); }
+}
+
+@keyframes sparkle {
+    0%, 100% { 
+        opacity: 0;
+        transform: rotate(0deg) scale(0.5);
+    }
+    50% { 
+        opacity: 1;
+        transform: rotate(180deg) scale(1);
+    }
+}

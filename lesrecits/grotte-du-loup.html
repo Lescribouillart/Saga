@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La grotte du loup</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header-booki">
+        <div class="logo">
+            <a href="../index.html"></a>
+            <img src="../images/stylo-a-plume.png" alt="Logo " height="60">
+            </a>
+        </div>
+
+        <div class="nav-zone">
+            <nav class="nav-booki">
+                <div class="dropdown">
+                    <a href="#articles" class="dropdown-toggle" title="Les articles">
+                        <img src="../images/journal.png" alt="Journal" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les articles</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="../lesarticles/worldofwarcraft.html">World of Warcraft</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#recits" class="dropdown-toggle" title="Les récits">
+                        <img src="../images/recits.png" alt="Récits" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les récits</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-submenu">
+                            <a href="#" class="dropdown-submenu-toggle">Fanfiction <span class="arrow">▶</span></a>
+                            <div class="dropdown-submenu-content">
+                                <div class="dropdown-sub-submenu">
+                                    <a href="#" class="dropdown-sub-submenu-toggle">Harry Potter <span class="arrow">▶</span></a>
+                                    <div class="dropdown-sub-submenu-content">
+                                        <a href="../lesrecits/parapluie.html">L'invention du sortilège du parapluie</a>
+                                        <a href="../lesrecits/botaniste.html">Le journal d'un botaniste</a>
+                                        <a href="../lesrecits/flamel.html">Le journal intime de Nicolas Flamel</a>
+                                        <a href="../lesrecits/tresor-fondateurs.html">Le trésor des fondateurs</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu">
+                            <a href="#" class="dropdown-submenu-toggle">Fiction <span class="arrow">▶</span></a>
+                            <div class="dropdown-submenu-content">
+                                <a href="../lesrecits/grotte-du-loup.html">La grotte du loup</a>
+                                <a href="../lesrecits/tableau-frappeur.html">Le tableau frappeur</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#jeux" class="dropdown-toggle" title="Les jeux">
+                        <img src="../images/rpg.png" alt="RPG" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les jeux</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="">Le tableau</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        
+        <div class="header-right">
+            <!-- Champ de recherche -->
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Je cherche un article ou un récit..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            
+            <button id="dark-mode-toggle" class="dark-mode-btn">
+            <span class="sun-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+                </svg>
+            </span>
+            <span class="moon-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"/>
+                </svg>
+            </span>
+        </button>
+    </header>
+
+
+    <main>
+        <!-- Hero Section avec style moderne -->
+        <div class="story-hero">
+            <div class="story-hero-background">
+                <div class="story-hero-overlay"></div>
+                <img src="../images/loup.png" alt="La grotte du loup" class="story-hero-image flamel-image">
+            </div>
+            <div class="story-hero-content">
+                <div class="story-header-line">
+                    <div class="story-meta">
+                        <span class="story-date">Le 8 juillet 2025</span>
+                        <span class="story-separator">par</span>
+                        <span class="story-author">Drelall</span>
+                    </div>
+                    <h1 class="story-title">La grotte du loup</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenu principal de l'article -->
+        <article class="story-content">
+            <div class="story-body">
+                <p>Aussi loin que je m'en souvienne, j’ai toujours aimé les grandes randonnées. Parcourir les chemins, traverser les montagnes, les forêts, les rivières. Observer les animaux et découvrir de nouveaux paysages.
+Ce jour-là, j’arpentais les sentiers comme à mon habitude. Il est vrai que ce parcours, je le pratiquais habituellement à vélo. Donc, le chemin me parut un peu plus long qu’à l’accoutumée. Et je l’appréciais d’autant plus, car il faisait un temps magnifique en cette fin d'après-midi.  
+Consultant brièvement le cadran de ma montre, je vis qu'il était temps de rentrer. J'observais le soleil terminer lentement sa course, illuminant de couleurs pourpres un magnifique séquoia géant. Un peu plus bas, je passais à proximité de chalets destinés aux chasseurs locaux. Ces bâtisses signaient la fin de mon parcours, il ne me restait qu'une petite heure avant de rejoindre mon véhicule.</p>
+
+                <p>Dans cette partie de la montagne, il y avait un ruisseau. Ce cours d'eau longeait un chemin pour finir dans une cascade qui était à proximité d’une grotte. À ce moment-là, j’étais parti loin dans mes pensées. Néanmoins, je sentais depuis quelque temps que l’atmosphère avait changé. J’observais la nature et ses formes étranges qui se dessinaient dans les bois. C’était magnifique, j’étais là en train de rêver.
+Mais de temps à autre, des petits bruits de pas furtifs se faisaient entendre. Rien de bien extraordinaire, quand on se déplace seul en forêt. Cela vous met en bonne condition pour observer la nature et peut-être des animaux. Cet après-midi là, je n’en vis pas un seul. Par contre, j'avais la vague impression que l'on me suivait…</p>
+
+                <p>Les indices se manifestèrent graduellement, en s’intensifiant durant ma descente sur cette piste. Et comme je le disais, j’étais vraiment dans mes pensées, quasiment dans un état méditatif. Toutes ces informations inconscientes émergèrent à un moment fatidique.
+À cet instant, j'étais arrivé au niveau de la cascade. Et brusquement, je suis sorti de mon état quasi hypnotique. Ma tête tourna rapidement vers la gauche, appelé par un son particulièrement inquiétant. En direction du ravin qui me surplombait, je vis un tas de gravats dévaler une pente d’environ trois ou quatre mètres.</p>
+
+                <p>Tout ceci, mon esprit le saisit en une fraction de seconde. Malgré la tension qui régnait en moi et mon rythme cardiaque qui augmentait, je réussis à garder mon calme.
+Sachant que la fin du sentier n’était plus très loin, je continuai tant bien que mal. Le parcours était de moins en moins éclairé, et j'essayais de me frayer un chemin à travers la végétation. Je continuais malgré tout, même si je sentais une intention de plus en plus obscure. Crac… Je me retournais vers un arbre avec l’air le plus menaçant possible, il n’y avait rien. Cette chose ne me lâchait pas. J’arrivais à quelques centaines de mètres de ma destination, quand le sentier s’éclaira progressivement. Comme si je reprenais une longue bouffée d'oxygène après un long moment d’asphyxie.</p>
+
+        
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <a href="mailto:jacques.bobbio@outlook.fr" class="contact-btn">Me contacter</a>
+            </div>
+        </div>
+    </footer>
+    <script src="../carousel/scrypt.js"></script>
+</body>
+</html>

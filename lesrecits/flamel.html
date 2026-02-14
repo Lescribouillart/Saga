@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le journal intime de Nicolas Flamel</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header-booki">
+        <div class="logo">
+            <a href="../index.html">
+                <img src="../images/stylo-a-plume.png" alt="Logo " height="60">
+            </a>
+        </div>
+
+        <div class="nav-zone">
+            <nav class="nav-booki">
+                <div class="dropdown">
+                    <a href="#articles" class="dropdown-toggle" title="Les articles">
+                        <img src="../images/journal.png" alt="Journal" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les articles</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="../lesarticles/worldofwarcraft.html">World of Warcraft</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#recits" class="dropdown-toggle" title="Les récits">
+                        <img src="../images/recits.png" alt="Récits" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les récits</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-submenu">
+                            <a href="#" class="dropdown-submenu-toggle">Fanfiction <span class="arrow">▶</span></a>
+                            <div class="dropdown-submenu-content">
+                                <div class="dropdown-sub-submenu">
+                                    <a href="#" class="dropdown-sub-submenu-toggle">Harry Potter <span class="arrow">▶</span></a>
+                                    <div class="dropdown-sub-submenu-content">
+                                        <a href="../lesrecits/parapluie.html">L'invention du sortilège du parapluie</a>
+                                        <a href="../lesrecits/botaniste.html">Le journal d'un botaniste</a>
+                                        <a href="../lesrecits/flamel.html">Le journal intime de Nicolas Flamel</a>
+                                        <a href="../lesrecits/tresor-fondateurs.html">Le trésor des fondateurs</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu">
+                            <a href="#" class="dropdown-submenu-toggle">Fiction <span class="arrow">▶</span></a>
+                            <div class="dropdown-submenu-content">
+                                <a href="../lesrecits/grotte-du-loup.html">La grotte du loup</a>
+                                <a href="../lesrecits/tableau-frappeur.html">Le tableau frappeur</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#jeux" class="dropdown-toggle" title="Les jeux">
+                        <img src="../images/rpg.png" alt="RPG" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les jeux</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="">Le tableau</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        
+        <div class="header-right">
+            <!-- Champ de recherche -->
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Je cherche un article ou un récit..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            
+            <button id="dark-mode-toggle" class="dark-mode-btn">
+            <span class="sun-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+                </svg>
+            </span>
+            <span class="moon-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"/>
+                </svg>
+            </span>
+        </button>
+    </header>
+
+    <main>
+        <!-- Hero Section avec style moderne -->
+        <div class="story-hero">
+            <div class="story-hero-background">
+                <div class="story-hero-overlay"></div>
+                <img src="../images/illustration/flamel.png" alt="Journal intime de Nicolas Flamel" class="story-hero-image flamel-image">
+            </div>
+            <div class="story-hero-content">
+                <div class="story-header-line">
+                    <div class="story-meta">
+                        <span class="story-date">Le 8 juillet 2025</span>
+                        <span class="story-separator">par</span>
+                        <span class="story-author">Drelall</span>
+                    </div>
+                    <h1 class="story-title">Le journal intime de Nicolas Flamel</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenu principal de l'article -->
+        <article class="story-content">
+            <div class="story-body">
+                <p>Juin 1992, dans un coin paisible du Devon. Voilà que j'écris ces dernières lignes à l'attention de ceux qui veulent bien les lire. Ce matin, je me suis levé très tôt pour aller à la pêche, mon nouvel obi. Je l'avoue, je n'attrape pas grand-chose, si ce n'est rien. Et quand bien même j'aurai une prise, je n'aurais suffisamment de force pour la sortir de l'eau. C'est juste ma manière d'apprécier les choses simples de la vie, ainsi que le cadre magnifique qui entoure notre maison.</p>
+
+                <p>Une fois de retour, Pernelle et moi terminerons d'emballer la plupart de nos effets personnels dans des caisses à destination de Paris.Ce jour, je me suis mis d'accord avec Albus pour détruire l'élixir de longue vie. Une idée qui ne m'enchante qu'à moitié. Qui voudrait mettre fin à sa vie. J'ai expliqué tout cela à ma femme, qui prit la nouvelle avec nettement plus d'optimisme que moi. Il est évident que le précieux breuvage ne doit pas tomber entre les mains de Voldemort. Un mage noir, comme on n'en a pas vu depuis des siècles. Même Gellert Grindelwald ne paraissait pas aussi sinistre.</p>
+
+                <p>Voilà mon dernier jour et celui de ma Pernelle bien-aimé. Cependant, tout ce que l'on a accumulé n'est pas perdu. Ce savoir sera conservé dans un endroit secret détenu par le Ministère de la Magie en France.Quelle déception, j'avais encore tant à faire... Mais j'ai aussi largement vécu, qui n'aurait pas voulu être à ma place en traversant autant d'époques. Celle-ci reste ma préférée, même si de vieux démons ont refait surface.</p>
+
+                <p>Ma chère et tendre s'affaire en cuisine, elle m'a promis le meilleur repas de toute notre vie. Et je la crois, c'est une cuisinière hors du commun. Nous avons également invité Albus et d'autres membres de l'Ordre, afin de faire nos adieux dans les règles. Tous les deux, nous ne voulons pas que cela soit un moment triste, car il est plus que temps pour nous de franchir le voile.</p>
+
+                <p>La seule chose qui nous chagrine à cet instant, c'est que nous n'avons eu de descendance. De faute de pouvoir procréer, nous avons cherché partout en Europe une personne digne de recevoir notre héritage. Malheureusement, même si certains ont encore des liens de sang. Aucun ne sera à la hauteur... Peut-être que dans un futur proche, une personne renaîtra de nos cendres. À ce moment-là, elle saura où trouver son héritage.</p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <a href="mailto:jacques.bobbio@outlook.fr" class="contact-btn">Me contacter</a>
+            </div>
+        </div>
+    </footer>
+    <script src="../carousel/scrypt.js"></script>
+</body>
+</html>

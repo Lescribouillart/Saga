@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'invention du sortilège du parapluie</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header-booki">
+        <div class="logo">
+            <a href="../index.html">
+                <img src="../images/stylo-a-plume.png" alt="Logo " height="60">
+            </a>
+        </div>
+
+        <div class="nav-zone">
+            <nav class="nav-booki">
+                <div class="dropdown">
+                    <a href="#articles" class="dropdown-toggle" title="Les articles">
+                        <img src="../images/journal.png" alt="Journal" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les articles</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="../lesarticles/worldofwarcraft.html">World of Warcraft</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#recits" class="dropdown-toggle" title="Les récits">
+                        <img src="../images/recits.png" alt="Récits" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les récits</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-submenu">
+                            <a href="#" class="dropdown-submenu-toggle">Fanfiction <span class="arrow">▶</span></a>
+                            <div class="dropdown-submenu-content">
+                                <div class="dropdown-sub-submenu">
+                                    <a href="#" class="dropdown-sub-submenu-toggle">Harry Potter <span class="arrow">▶</span></a>
+                                    <div class="dropdown-sub-submenu-content">
+                                        <a href="../lesrecits/parapluie.html">L'invention du sortilège du parapluie</a>
+                                        <a href="../lesrecits/botaniste.html">Le journal d'un botaniste</a>
+                                        <a href="../lesrecits/flamel.html">Le journal intime de Nicolas Flamel</a>
+                                        <a href="../lesrecits/tresor-fondateurs.html">Le trésor des fondateurs</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu">
+                            <a href="#" class="dropdown-submenu-toggle">Fiction <span class="arrow">▶</span></a>
+                            <div class="dropdown-submenu-content">
+                                <a href="../lesrecits/grotte-du-loup.html">La grotte du loup</a>
+                                <a href="../lesrecits/tableau-frappeur.html">Le tableau frappeur</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#jeux" class="dropdown-toggle" title="Les jeux">
+                        <img src="../images/rpg.png" alt="RPG" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les jeux</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="">Le tableau</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        
+        <div class="header-right">
+            <!-- Champ de recherche -->
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Je cherche un article ou un récit..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            
+            <button id="dark-mode-toggle" class="dark-mode-btn">
+            <span class="sun-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+                </svg>
+            </span>
+            <span class="moon-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"/>
+                </svg>
+            </span>
+        </button>
+    </header>
+
+    <main>
+        <!-- Hero Section avec style moderne -->
+        <div class="story-hero">
+            <div class="story-hero-background">
+                <div class="story-hero-overlay"></div>
+                <img src="../images/illustration/parapluie.png" alt="Sortilège du parapluie" class="story-hero-image">
+            </div>
+            <div class="story-hero-content">
+                <div class="story-header-line">
+                    <div class="story-meta">
+                        <span class="story-date">Le 8 juillet 2025</span>
+                        <span class="story-separator">par</span>
+                        <span class="story-author">Drelall</span>
+                    </div>
+                    <h1 class="story-title">L'invention du sortilège du parapluie</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenu principal de l'article -->
+        <article class="story-content">
+            <div class="story-body">
+                <p>Le sortilège du parapluie fut inventé à la fin du 18ème siècle par un sorcier Londonien nommé Perry Moppins. Pour la création de ce sortilège, il fut inspiré et aidé par son amie. Une moldue du nom de Samantha Claus. Perry est né le 18 septembre 1772 à Londres, c'était également là où il résidait et avait toujours vécu. Miss Clauss était aussi son associé. Tous les deux vivaient dans un quartier mal famé du nord de la Capitale, dans une habitation étrange en forme de cheminée. Il vivait une existence modeste, à l'écart de l'agitation des rues commerçantes.</p>
+
+                <p>Le jeune fabriquant de poudre estimait que les qualités d'un mage n'étaient pas forcément en rapport avec sa puissance magique. Mais que les sorts qui demandait peu d'énergie pouvait en aider plus d'un. Ce qu'il lui plaisait avant tout, c'était que les sortilèges pouvaient être accessibles à tous quelque soit leur niveau dans l'apprentissage de la magie. Car après tout, elle devrait être utile au plus grand nombre. Samantha quant à elle, admirait sans sourciller l'optimisme sans faille de son ami d'enfance. Moppins & Claus étaient vendeurs de poudre de cheminette. Leur commerce se faisait exclusivement à domicile. Les différentes gammes qu'il proposait à cette époque étaient composées d'une palette de différentes couleurs. Les plus vendus à cette époque étaient de couleur patronus. Celle-ci, donnait un certain style aux flammes qui se dégageait, après l'arrivée d'un voyageur dans une cheminée.</p>
+
+                <p>Malgré un travail qui faisait toute sa fierté. Certains jours quand il rentrait chez lui, il avait le sentiment qu'il pouvait en faire plus. Et apporter sa modeste contribution au quotidien des sorciers. Sans cesse, il s'interrogeait. Peut-être devrait-il penser, à quelle problématique il était confronté tous les jours ? Il y en avait bien une qu'il lui posait souvent des soucis. C'étaient les nombreuses semaines de pluie qui s'abattaient pendant certaines périodes de l'année. Malgré le sort d'Impervius, des trombes d'eau avaient abîmé plusieurs fois sa marchandise au moment de la livraison. Précisément, quand ses clients avaient du retard. Il devait attendre devant leur porte, ayant nulle part où s'abriter. Il utilisait de temps à autre un parapluie moldu. Mais ce n'était pas bien perçu par ses clients au sang pur. De peur, de perdre ses précieux acheteurs, il prenait le risque d'endommager une partie de sa marchandise chaque jour.</p>
+
+                <p>Un soir, où il était installé chez lui devant un bon feu. Samantha, qui s'afférait dans le salon, ouvra un parapluie au-dessus d'elle. Avec minutie, elle vérifia qu'il n'était pas troué. Ce geste simple, lança une idée dans l'esprit de Perry. Si bien, qu'il commença à visualiser un dôme invisible au-dessus de la tête de Samantha. C'était ça ! Il devait inventer un sort qui permettrait de se protéger de la pluie ! Quelques journées passèrent. Et chaque journée se finalisait par un événement majeur. Le premier jour fut consacré au geste du sort, « lever la baguette vers le ciel monter le bras puis redescendre ». Imiter le geste d'ouverture d'un parapluie "très intuitif" finit-il par conclure. C'était ce mouvement qui rendrait le sort si simple à retenir. Le deuxième jour, il s'agissait d'isoler une émotion en particulier. Il était passé par tous les états possibles. Il se sentit rassuré d'être au sec par un temps pluvieux. Ou en étant persuadé que la pluie ne pouvait l'atteindre. Finalement, se sentir protégé était le sentiment le plus naturel qui soit. Le troisième jour, Perry était à court d'idée. C'est alors que Samantha suggéra le mot « UMbrela » en insistant bien sur la première syllabe. Cette formulation fut validée par les deux partis. Puis, les jours qui suivirent, le sortilège s'améliora jusqu'à devenir parfait.</p>
+
+                <p>Perry Moppins utilisa ce sort une bonne partie de sa vie, et plus jamais il n'eut à se débarrasser d'une partie de sa marchandise. Bon nombre de ses clients, lui empruntèrent le sortilège du parapluie. Si bien, que ses commandes ne concernaient pas seulement la poudre de cheminette. Car tous, voulaient connaître ce sort. Malheureusement, le 11 août 1810. Perry Moppins et Samantha Claus disparurent au large des Bahamas lors d'un voyage d'affaires. Ainsi, les années passèrent. Leur savoir-faire, et le nom de leur enseigne tombèrent dans l'oubli. Malgré cette fin tragique, ils laissèrent un magnifique héritage au monde sorcier. Le sortilège du parapluie était à présent dans toutes les mains. Des plus expertes aux moins habiles. Mais accessible à tous.</p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <a href="mailto:jacques.bobbio@outlook.fr" class="contact-btn">Me contacter</a>
+            </div>
+        </div>
+    </footer>
+    <script src="../carousel/scrypt.js"></script>
+</body>
+</html>

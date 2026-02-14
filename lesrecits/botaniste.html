@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le journal d'un botaniste</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="header-booki">
+        <div class="logo">
+            <a href="../index.html">
+                <img src="../images/stylo-a-plume.png" alt="Logo " height="60">
+            </a>
+        </div>
+
+        <div class="nav-zone">
+            <nav class="nav-booki">
+                <div class="dropdown">
+                    <a href="#articles" class="dropdown-toggle" title="Les articles">
+                        <img src="../images/journal.png" alt="Journal" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les articles</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="../lesarticles/worldofwarcraft.html">World of Warcraft</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#recits" class="dropdown-toggle" title="Les récits">
+                        <img src="../images/recits.png" alt="Récits" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les récits</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-submenu">
+                            <a href="#" class="dropdown-submenu-toggle">Fanfiction <span class="arrow">▶</span></a>
+                            <div class="dropdown-submenu-content">
+                                <div class="dropdown-sub-submenu">
+                                    <a href="#" class="dropdown-sub-submenu-toggle">Harry Potter <span class="arrow">▶</span></a>
+                                    <div class="dropdown-sub-submenu-content">
+                                        <a href="../lesrecits/parapluie.html">L'invention du sortilège du parapluie</a>
+                                        <a href="../lesrecits/botaniste.html">Le journal d'un botaniste</a>
+                                        <a href="../lesrecits/flamel.html">Le journal intime de Nicolas Flamel</a>
+                                        <a href="../lesrecits/tresor-fondateurs.html">Le trésor des fondateurs</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu">
+                            <a href="#" class="dropdown-submenu-toggle">Fiction <span class="arrow">▶</span></a>
+                            <div class="dropdown-submenu-content">
+                                <a href="../lesrecits/grotte-du-loup.html">La grotte du loup</a>
+                                <a href="../lesrecits/tableau-frappeur.html">Le tableau frappeur</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#jeux" class="dropdown-toggle" title="Les jeux">
+                        <img src="../images/rpg.png" alt="RPG" width="36" height="36" style="vertical-align:middle;">
+                        <span style="margin-left: 8px;">Les jeux</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="">Le tableau</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        
+        <div class="header-right">
+            <!-- Champ de recherche -->
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Je cherche un article ou un récit..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            
+            <button id="dark-mode-toggle" class="dark-mode-btn">
+            <span class="sun-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+                </svg>
+            </span>
+            <span class="moon-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"/>
+                </svg>
+            </span>
+        </button>
+    </header>
+
+    <main>
+        <!-- Hero Section avec style moderne -->
+        <div class="story-hero">
+            <div class="story-hero-background">
+                <div class="story-hero-overlay"></div>
+                <img src="../images/illustration/botaniste.png" alt="Journal d'un botaniste" class="story-hero-image">
+            </div>
+            <div class="story-hero-content">
+                <div class="story-header-line">
+                    <div class="story-meta">
+                        <span class="story-date">Le 8 juillet 2025</span>
+                        <span class="story-separator">par</span>
+                        <span class="story-author">Drelall</span>
+                    </div>
+                    <h1 class="story-title">Le journal d'un botaniste</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenu principal de l'article -->
+        <article class="story-content">
+            <div class="story-body">
+                <p>12e jour, depuis le début de mon expédition. Les quelques dizaines de kilomètres que j'ai effectués à pied dans la chaîne montagneuse des Carpates m'ont permis de découvrir des zones inaccessibles. Ces grandes forêts primaires d'Europe centrale, sont des milieux où la biodiversité est restée intact.L'influence de l'homme y est à son niveau minimal. Et à part les ours, qui se montrent un peu timides en cette saison. Je ne risque pas de croiser grand monde dans les refuges.</p>
+
+                <p>Mon premier objectif était de grimper à l'intérieur d'un cirque, une sorte de petite vallée qui c'était formé entre deux arêtes de montagne. C'était là où s'épanouissait la Saxifrage. C'est une plante qui apparaît souvent entre les rochers. Elle a le teint rose basal. Et des dépôts de calcaire se forme sur la surface de ses feuilles dentées. "Saxifrage" signifie « briseur de pierre ». Cette espèce magique, particulièrement identique à la « Saxifrage paniculée » que l'on peut trouver dans les alpes. A pour particularité, d'ouvrir des passages même dans les roches les plus résistantes. Elle peut atteindre une hauteur de 40 cm et un diamètre de 13 mm. C'est une plante vivace qui fleurit de mai à août. Je récoltais quelques échantillons de dent de pierre (autre nom de la plante). Pour une analyse dans le refuge.</p>
+
+                <p>13e jour, les quelques boutures que j'ai pu ramener avec moi la veille son prometteuses. Mon assistant à transplané ce matin pour acheminer ces nouvelles trouvailles dans mon laboratoire.Mon équipement sur le dos, je m'apprête à rejoindre ma deuxième destination. Une forêt où se développe l'Aconit sparciat. Cette plante hautement toxique est une variante magique de l' "Aconit napel" qui est également présente dans les Hautes-Alpes. Quand elle fleurit, l'Aconit se part de couleur d'un bleu violacé. Ses pétales prennent une forme bombée et allongée. Elle est aussi appelée "le casque de Jupiter". Sa taille varie entre 20 et 170 cm, pour un diamètre de 20 à 30 mm.</p>
+
+                <p>Pour rencontrer cette variété spéciale. Je me suis approché de l'une des dernières forêts qui peut y avoir à cette altitude. En traversant une prairie, j'ai croisé une tribu de gnome peu farouche. À ma grande surprise, ils m'ont indiqué où trouver la fleur. L'aconit sparciat, quand elle est préparée en potion. Renforce la peau et la rend aussi dure que le métal. Après quelques coups de machette. J'arrivais à la lisière de la forêt quand j'ouvris m'on sac en toile. Je pris mes précautions en enfilant des gants pour éviter de rentrer en contact avec la plante. Et j'y ai entassé autant de fleurs que je pouvais.</p>
+
+                <p>Une fois, le sac sur mon dos, je regardais l'horizon. Le jour commençait à décliner.J'accélérais le pas. Car cet endroit abritait un troll des montagnes. Les quelques traces fraiches que j'ai repérées à l'aller n'étaient pas très rassurante. De justesse, je suis rentré pour m'abriter avant la nuit. Puis, J'ai passé le reste de la soirée à stocker les plantes soigneusement découpées dans des bocaux.Le lendemain matin, je retrouvais la civilisation.</p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <a href="mailto:jacques.bobbio@outlook.fr" class="contact-btn">Me contacter</a>
+            </div>
+        </div>
+    </footer>
+    <script src="../carousel/scrypt.js"></script>
+</body>
+</html>
