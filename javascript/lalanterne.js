@@ -29,10 +29,6 @@ class LaLanterne {
         
         // Gestionnaires d'événements
         this.apartment.addEventListener('click', (e) => this.movePlayer(e));
-        const closeBtn = document.getElementById('closeGame');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => this.closeGame());
-        }
     }
 
     /* ----------------------------------
@@ -88,16 +84,6 @@ class LaLanterne {
     updatePlayerPosition() {
         this.player.style.left = this.playerPosition.x + 'px';
         this.player.style.top = this.playerPosition.y + 'px';
-    }
-
-    /* -----------
-       UTILITAIRES
-       ----------- */
-    closeGame() {
-        // Fermer le jeu ou rediriger
-        if (confirm('Voulez-vous vraiment quitter le jeu ?')) {
-            window.close();
-        }
     }
 }
 

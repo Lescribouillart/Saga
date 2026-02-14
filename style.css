@@ -3349,26 +3349,3 @@ form select,
     from { filter: drop-shadow(0 0 3px #d4af37); }
     to { filter: drop-shadow(0 0 8px #ffd700); }
 }
-
-.game-ui {
-    padding: 15px;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.3);
-    border-top: 2px solid #d4af37;
-}
-
-.btn-secondary {
-    background: rgba(212, 175, 55, 0.2);
-    border: 2px solid #d4af37;
-    color: #d4af37;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Georgia', serif;
-    transition: all 0.3s;
-}
-
-.btn-secondary:hover {
-    background: rgba(212, 175, 55, 0.4);
-    transform: scale(1.05);
-}
