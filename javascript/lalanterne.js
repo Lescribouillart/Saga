@@ -90,8 +90,8 @@ class LaLanterne {
         return `
             <div class="game-container">
                 <div class="game-header">
-                    <h2>SAGA - Appartement de l'Aventurier</h2>
-                    <p>Vous vous réveillez dans votre salon... Que s'est-il passé après avoir traversé le tableau ?</p>
+                    <h2>Le pub La Lanterne - et l'appartement des Granfont</h2>
+                    <p>La visite commence à l'intérieur du pub...</p>
                 </div>
                 
                 <div class="apartment-container" id="apartment">
