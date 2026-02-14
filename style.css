@@ -3153,7 +3153,7 @@ form select,
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url('../images/illustration/lemur.png');
+    background-image: url('images/illustration/lemur.png');
     background-size: cover;
     background-position: center;
     border-radius: 12px;
@@ -3318,7 +3318,7 @@ form select,
 .apartment-container {
     flex: 1;
     position: relative;
-    background-image: url('../images/jeux/lespieces/salle.jpg');
+    background-image: url('images/jeux/lespieces/salle.jpg');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
