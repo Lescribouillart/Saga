@@ -7,27 +7,21 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/dialogue.css">
 </head>
-<body>
-    <!-- Fenêtre modale de chargement -->
-    <div id="loadingModal" class="loading-modal" style="cursor: url('images/pointeur.png'), default;">
-        <div class="loading-modal-content">
-            <div class="loading-container">
-                <!-- Particules magiques -->
-                <div class="magic-particles" id="particles"></div>
-                
-                <div class="loading-content">
-                    <h1 class="loading-title">Le pub La Lanterne</h1>
-                    <p class="loading-subtitle">Visite interactive</p>
-                    
-                    <div class="progress-container">
-                        <div class="progress-bar" id="progressBar"></div>
-                    </div>
-                    
-                    <div class="progress-text">
-                        <span id="progressPercent">0%</span>
-                    </div>
-                </div>
+<body style="cursor: url('images/pointeur.png'), default;">
+    <div class="game-container">
+        <div class="game-header">
+            <h2>Le pub La Lanterne - et l'appartement des Granfont</h2>
+            <p>La visite commence à l'intérieur du pub...</p>
+        </div>
+        
+        <div class="apartment-container" id="apartment">
+            <div class="character" id="player">
+                <div class="character-sprite">🧙‍♂️</div>
             </div>
+        </div>
+        
+        <div class="game-ui">
+            <button id="closeGame" class="btn-secondary">Quitter le jeu</button>
         </div>
     </div>
     

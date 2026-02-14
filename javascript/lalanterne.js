@@ -11,100 +11,8 @@ class LaLanterne {
     }
 
     init() {
-        // Lancer directement la modal de chargement au chargement de la page
-        this.showLoadingModal();
-    }
-
-    /* --------------------------------
-       GESTION DE L'ÉCRAN DE CHARGEMENT
-       -------------------------------- */
-    showLoadingModal() {
-        const loadingModal = document.getElementById('loadingModal');
-        loadingModal.classList.add('show');
-        this.startLoadingAnimation();
-    }
-
-    hideLoadingModal() {
-        const loadingModal = document.getElementById('loadingModal');
-        loadingModal.classList.remove('show');
-        document.body.style.overflow = 'auto';
-    }
-
-    startLoadingAnimation() {
-        let progress = 0;
-        const progressBar = document.getElementById('progressBar');
-        const progressPercent = document.getElementById('progressPercent');
-        
-        // Créer les particules magiques
-        this.createLoadingParticles();
-        
-        // Animation de la barre de progression
-        const updateProgress = () => {
-            if (progress <= 100) {
-                progressBar.style.width = progress + '%';
-                progressPercent.textContent = Math.floor(progress) + '%';
-                
-                progress += Math.random() * 8 + 2;
-                
-                if (progress >= 100) {
-                    // Chargement terminé, lancer le jeu
-                    setTimeout(() => {
-                        setTimeout(() => {
-                            this.startGame();
-                        }, 800);
-                    }, 300);
-                } else {
-                    setTimeout(updateProgress, 50 + Math.random() * 100);
-                }
-            }
-        };
-        
-        setTimeout(updateProgress, 500);
-    }
-
-    createLoadingParticles() {
-        const particlesContainer = document.getElementById('particles');
-        particlesContainer.innerHTML = '';
-        
-        for (let i = 0; i < 12; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 6 + 's';
-            particle.style.animationDuration = (4 + Math.random() * 4) + 's';
-            particlesContainer.appendChild(particle);
-        }
-    }
-
-    /* --------------------------------
-       CRÉATION DE L'INTERFACE DE JEU
-       -------------------------------- */
-    startGame() {
-        const loadingModal = document.getElementById('loadingModal');
-        loadingModal.innerHTML = this.createGameInterface();
-        
+        // Lancer directement le jeu
         this.initializeGame();
-    }
-
-    createGameInterface() {
-        return `
-            <div class="game-container">
-                <div class="game-header">
-                    <h2>Le pub La Lanterne - et l'appartement des Granfont</h2>
-                    <p>La visite commence à l'intérieur du pub...</p>
-                </div>
-                
-                <div class="apartment-container" id="apartment">
-                    <div class="character" id="player">
-                        <div class="character-sprite">🧙‍♂️</div>
-                    </div>
-                </div>
-                
-                <div class="game-ui">
-                    <button id="closeGame" class="btn-secondary">Quitter le jeu</button>
-                </div>
-            </div>
-        `;
     }
 
     initializeGame() {
@@ -121,7 +29,10 @@ class LaLanterne {
         
         // Gestionnaires d'événements
         this.apartment.addEventListener('click', (e) => this.movePlayer(e));
-        document.getElementById('closeGame').addEventListener('click', () => this.closeGame());
+        const closeBtn = document.getElementById('closeGame');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => this.closeGame());
+        }
     }
 
     /* ----------------------------------
@@ -183,7 +94,10 @@ class LaLanterne {
        UTILITAIRES
        ----------- */
     closeGame() {
-        this.hideLoadingModal();
+        // Fermer le jeu ou rediriger
+        if (confirm('Voulez-vous vraiment quitter le jeu ?')) {
+            window.close();
+        }
     }
 }
 
