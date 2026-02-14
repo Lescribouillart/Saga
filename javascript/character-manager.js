@@ -1,90 +1,19 @@
 class CharacterSheetManager {
     constructor() {
+        // Personnage par défaut
         this.character = {
-            name: '',
-            type: '',
-            class: '',
-            deity: ''
-        };
-
-        this.universe = {
-            sorcier: {
-                name: 'Sorcier',
-                classes: [
-                    { value: 'enchanteur', name: 'Enchanteur' }
-                ],
-                deities: [
-                    { value: 'dragons', name: 'Les Dragons' }
-                ]
-            }
+            name: 'Aventurier',
+            type: 'sorcier',
+            class: 'enchanteur',
+            deity: 'dragons'
         };
 
         this.init();
     }
 
     init() {
-        this.bindEvents();
-    }
-
-    bindEvents() {
-        const modal = document.getElementById('characterModal');
-        const closeBtn = document.getElementById('closeModal');
-        const frameHoverArea = document.getElementById('frameHoverArea');
-        const typeSelect = document.getElementById('char-type');
-        const playBtn = document.getElementById('playCharacter');
-
-        frameHoverArea.addEventListener('click', () => {
-            console.log('Zone tableau cliquée, ouverture fiche personnage');
-            this.openModal();
-        });
-
-        closeBtn.addEventListener('click', () => {
-            this.closeModal();
-        });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                this.closeModal();
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('show')) {
-                this.closeModal();
-            }
-        });
-
-        typeSelect.addEventListener('change', () => this.updateClassOptions());
-
-        if (playBtn) {
-            playBtn.addEventListener('click', () => {
-                this.updateCharacterFromForm();
-                
-                // Vérifier que les champs requis sont remplis
-                if (!this.character.name || !this.character.type || !this.character.class || !this.character.deity) {
-                    alert('Veuillez remplir tous les champs avant de jouer.');
-                    return;
-                }
-                
-                // Fermer la modale du personnage
-                this.closeModal();
-                
-                // Afficher la fenêtre modale de chargement
-                this.showLoadingModal();
-            });
-        }
-    }
-
-    openModal() {
-        const modal = document.getElementById('characterModal');
-        modal.classList.add('show');
-        document.body.style.overflow = 'hidden';
-    }
-
-    closeModal() {
-        const modal = document.getElementById('characterModal');
-        modal.classList.remove('show');
-        document.body.style.overflow = 'auto';
+        // Lancer directement la modal de chargement au chargement de la page
+        this.showLoadingModal();
     }
 
     showLoadingModal() {
@@ -254,47 +183,6 @@ class CharacterSheetManager {
     closeGame() {
         // Fermer la fenêtre de jeu et revenir à l'écran principal
         this.hideLoadingModal();
-    }
-
-    updateCharacterFromForm() {
-        const form = document.getElementById('characterForm');
-        const formData = new FormData(form);
-        this.character.name = formData.get('name') || '';
-        this.character.type = formData.get('type') || '';
-        this.character.class = formData.get('class') || '';
-        this.character.deity = formData.get('deity') || '';
-    }
-
-    updateClassOptions() {
-        const typeSelect = document.getElementById('char-type');
-        const classSelect = document.getElementById('char-class');
-        const deitySelect = document.getElementById('char-deity');
-        const selectedType = typeSelect.value;
-
-        classSelect.innerHTML = '';
-        deitySelect.innerHTML = '';
-
-        if (selectedType && this.universe[selectedType]) {
-            classSelect.disabled = false;
-            deitySelect.disabled = false;
-            this.universe[selectedType].classes.forEach(cls => {
-                const option = document.createElement('option');
-                option.value = cls.value;
-                option.textContent = cls.name;
-                classSelect.appendChild(option);
-            });
-            this.universe[selectedType].deities.forEach(deity => {
-                const option = document.createElement('option');
-                option.value = deity.value;
-                option.textContent = deity.name;
-                deitySelect.appendChild(option);
-            });
-        } else {
-            classSelect.disabled = true;
-            deitySelect.disabled = true;
-            classSelect.innerHTML = '<option value="">Choisir d\'abord un type</option>';
-            deitySelect.innerHTML = '<option value="">Choisir d\'abord un type</option>';
-        }
     }
 }
 

@@ -1,21 +1,5 @@
-// Fichier vidé - toutes les fonctions qui généraient "Bienvenue Aventurier" sont supprimées
+// Fichier character-display.js - Simplifié
+// Toutes les fonctions de création de personnage ont été supprimées
+// Le jeu se lance maintenant directement au chargement de la page
 
-// TOUTES LES FONCTIONS SUPPRIMÉES :
-// - showCharacterSummary()
-// - displayCharacterInfo() 
-// - createSummaryModal()
-// - etc.
-
-console.log('character-display.js chargé - fonctions de récapitulatif supprimées');
-
-// Afficher/cacher l'image selon le type sélectionné
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('char-type').addEventListener('change', function() {
-        const characterImage = document.getElementById('characterImage');
-        if (this.value === 'sorcier') {
-            characterImage.style.display = 'block';
-        } else {
-            characterImage.style.display = 'none';
-        }
-    });
-});
+console.log('character-display.js chargé - Mode jeu direct activé');
