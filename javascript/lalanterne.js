@@ -7,14 +7,6 @@ class LaLanterne {
        INITIALISATION
        ---------------- */
     constructor() {
-        // Personnage par défaut
-        this.character = {
-            name: 'Aventurier',
-            type: 'sorcier',
-            class: 'enchanteur',
-            deity: 'dragons'
-        };
-
         this.init();
     }
 
@@ -92,14 +84,13 @@ class LaLanterne {
         loadingModal.innerHTML = this.createGameInterface();
         
         this.initializeGame();
-        console.log('Jeu démarré pour:', this.character);
     }
 
     createGameInterface() {
         return `
             <div class="game-container">
                 <div class="game-header">
-                    <h2>SAGA - Appartement de ${this.character.name}</h2>
+                    <h2>SAGA - Appartement de l'Aventurier</h2>
                     <p>Vous vous réveillez dans votre salon... Que s'est-il passé après avoir traversé le tableau ?</p>
                 </div>
                 
