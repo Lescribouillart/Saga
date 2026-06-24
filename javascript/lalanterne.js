@@ -46,6 +46,54 @@ class LaLanterne {
             btn.style.fontSize = '0.9rem';
             btn.style.cursor = 'pointer';
             header.appendChild(btn);
+            // Export / Import buttons
+            const exp = document.createElement('button');
+            exp.id = 'gridExportBtn';
+            exp.textContent = 'Exporter marques';
+            exp.style.marginLeft = '8px';
+            exp.style.padding = '6px 10px';
+            exp.style.fontSize = '0.9rem';
+            exp.style.cursor = 'pointer';
+            header.appendChild(exp);
+
+            const imp = document.createElement('input');
+            imp.type = 'file';
+            imp.accept = 'application/json';
+            imp.id = 'gridImportInput';
+            imp.style.display = 'none';
+            header.appendChild(imp);
+
+            const impBtn = document.createElement('button');
+            impBtn.id = 'gridImportBtn';
+            impBtn.textContent = 'Importer marques';
+            impBtn.style.marginLeft = '8px';
+            impBtn.style.padding = '6px 10px';
+            impBtn.style.fontSize = '0.9rem';
+            impBtn.style.cursor = 'pointer';
+            header.appendChild(impBtn);
+
+            exp.addEventListener('click', () => {
+                if (!this.grid) return;
+                this.grid.exportAllowed('obstacles.json');
+            });
+
+            impBtn.addEventListener('click', () => imp.click());
+            imp.addEventListener('change', (e) => {
+                const f = e.target.files && e.target.files[0];
+                if (!f) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    try {
+                        const arr = JSON.parse(ev.target.result);
+                        if (this.grid && typeof this.grid.importAllowedFromArray === 'function') {
+                            this.grid.importAllowedFromArray(arr);
+                        }
+                    } catch (err) {
+                        console.warn('Import failed', err);
+                    }
+                };
+                reader.readAsText(f);
+            });
             btn.addEventListener('click', () => {
                 if (!this.grid) return;
                 const visible = this.grid.gridCanvas && this.grid.gridCanvas.style.display !== 'none';

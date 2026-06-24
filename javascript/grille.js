@@ -249,13 +249,56 @@ class Grille {
     loadAllowed() {
         try {
             const raw = localStorage.getItem(this.storageKey);
-            if (!raw) return;
-            const arr = JSON.parse(raw);
-            this.allowedCells = new Set(arr);
-            // redraw overlay if ready
-            if (this.gridCanvas) this.updateGridOverlay();
+            if (raw) {
+                const arr = JSON.parse(raw);
+                this.allowedCells = new Set(arr);
+                if (this.gridCanvas) this.updateGridOverlay();
+                return;
+            }
+
+            // If nothing in localStorage, try to fetch a repository-provided file
+            // so that edits done with the grid can be applied project-wide.
+            try {
+                fetch('data/obstacles.json').then(r => {
+                    if (!r.ok) return;
+                    return r.json();
+                }).then(arr => {
+                    if (!arr) return;
+                    this.allowedCells = new Set(arr);
+                    if (this.gridCanvas) this.updateGridOverlay();
+                }).catch(() => {});
+            } catch (e) {
+                // ignore fetch errors (file absent or CORS)
+            }
         } catch (e) {
             console.warn('Grille.loadAllowed failed', e);
+        }
+    }
+
+    // Export current marks as a downloadable JSON file
+    exportAllowed(filename = 'obstacles.json') {
+        try {
+            const arr = Array.from(this.allowedCells || []);
+            const blob = new Blob([JSON.stringify(arr, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        } catch (e) {
+            console.warn('Grille.exportAllowed failed', e);
+        }
+    }
+
+    // Import marks from an object/array (used by file input)
+    importAllowedFromArray(arr) {
+        try {
+            this.allowedCells = new Set(arr || []);
+            this.updateGridOverlay();
+            this.saveAllowed();
+        } catch (e) {
+            console.warn('Grille.importAllowedFromArray failed', e);
         }
     }
 
