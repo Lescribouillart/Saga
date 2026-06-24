@@ -5,6 +5,8 @@ class Grille {
         this.allowedCells = new Set();
         this.gridCanvas = null;
         this.createGridOverlay();
+        this.storageKey = 'laLanterne.allowedCells.' + (window.location.pathname || 'default');
+        this.loadAllowed();
     }
 
     createGridOverlay() {
@@ -104,11 +106,77 @@ class Grille {
     }
 
     worldToGrid(x, y) {
-        const cx = x + 15;
-        const cy = y + 15;
+        const cx = x + this.gridCellSize / 2;
+        const cy = y + this.gridCellSize / 2;
         const gx = Math.max(0, Math.floor(cx / this.gridCellSize));
         const gy = Math.max(0, Math.floor(cy / this.gridCellSize));
         return { gx, gy };
+    }
+
+    gridToWorld(gx, gy) {
+        return {
+            x: gx * this.gridCellSize + this.gridCellSize / 2 - 15,
+            y: gy * this.gridCellSize + this.gridCellSize / 2 - 15
+        };
+    }
+
+    // A* pathfinding: marked cells (this.allowedCells) are obstacles
+    findPathWorld(startX, startY, targetX, targetY) {
+        const rect = this.apartment.getBoundingClientRect();
+        const cols = Math.ceil(rect.width / this.gridCellSize);
+        const rows = Math.ceil(rect.height / this.gridCellSize);
+
+        const start = this.worldToGrid(startX, startY);
+        const goal = this.worldToGrid(targetX, targetY);
+
+        const key = (x, y) => x + ',' + y;
+        const isWalkable = (x, y) => this.allowedCells.size === 0 ? true : !this.allowedCells.has(key(x, y));
+
+        if (!isWalkable(goal.gx, goal.gy)) return null;
+
+        const open = new Map();
+        const closed = new Set();
+
+        function heuristic(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
+
+        const startNode = { x: start.gx, y: start.gy, g: 0, f: heuristic(start, goal), parent: null };
+        open.set(key(startNode.x, startNode.y), startNode);
+
+        while (open.size) {
+            let current;
+            for (const n of open.values()) if (!current || n.f < current.f) current = n;
+            open.delete(key(current.x, current.y));
+            if (current.x === goal.gx && current.y === goal.gy) {
+                const path = [];
+                let node = current;
+                while (node) {
+                    path.push(this.gridToWorld(node.x, node.y));
+                    node = node.parent;
+                }
+                return path.reverse();
+            }
+            closed.add(key(current.x, current.y));
+
+            for (let dx = -1; dx <= 1; dx++) {
+                for (let dy = -1; dy <= 1; dy++) {
+                    if (dx === 0 && dy === 0) continue;
+                    const nx = current.x + dx;
+                    const ny = current.y + dy;
+                    if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) continue;
+                    if (!isWalkable(nx, ny)) continue;
+                    const nKey = key(nx, ny);
+                    if (closed.has(nKey)) continue;
+                    const tentativeG = current.g + Math.hypot(dx, dy);
+                    const existing = open.get(nKey);
+                    const h = heuristic({ x: nx, y: ny }, goal);
+                    if (!existing || tentativeG < existing.g) {
+                        const neighbor = { x: nx, y: ny, g: tentativeG, f: tentativeG + h, parent: current };
+                        open.set(nKey, neighbor);
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     markCellByWorld(x, y) {
@@ -117,6 +185,7 @@ class Grille {
         if (!this.allowedCells.has(key)) {
             this.allowedCells.add(key);
             this.updateGridOverlay();
+            this.saveAllowed();
         }
     }
 
@@ -135,16 +204,40 @@ class Grille {
             this.allowedCells.add(key);
         }
         this.updateGridOverlay();
+        this.saveAllowed();
     }
 
     clearAllowed() {
         this.allowedCells.clear();
         this.updateGridOverlay();
+        this.saveAllowed();
     }
 
     setCellSize(size) {
         this.gridCellSize = size;
         this.updateGridOverlay();
+    }
+
+    saveAllowed() {
+        try {
+            const arr = Array.from(this.allowedCells);
+            localStorage.setItem(this.storageKey, JSON.stringify(arr));
+        } catch (e) {
+            console.warn('Grille.saveAllowed failed', e);
+        }
+    }
+
+    loadAllowed() {
+        try {
+            const raw = localStorage.getItem(this.storageKey);
+            if (!raw) return;
+            const arr = JSON.parse(raw);
+            this.allowedCells = new Set(arr);
+            // redraw overlay if ready
+            if (this.gridCanvas) this.updateGridOverlay();
+        } catch (e) {
+            console.warn('Grille.loadAllowed failed', e);
+        }
     }
 
     hide() {

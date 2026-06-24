@@ -49,14 +49,21 @@ class LaLanterne {
         const targetX = event.clientX - rect.left - 15;
         const targetY = event.clientY - rect.top - 15;
         
-        // si clic sur la même case que le joueur, basculer l'état (marqué / non marqué)
+        // if clicked cell is marked (yellow), toggle it and do not move
         if (this.grid && typeof this.grid.worldToGrid === 'function') {
             const clicked = this.grid.worldToGrid(targetX, targetY);
-            const playerCell = this.grid.worldToGrid(this.playerPosition.x, this.playerPosition.y);
-            if (clicked.gx === playerCell.gx && clicked.gy === playerCell.gy) {
-                if (typeof this.grid.toggleCellByWorld === 'function') {
-                    this.grid.toggleCellByWorld(this.playerPosition.x, this.playerPosition.y);
+            if (this.grid.isCellMarkedByWorld(targetX, targetY)) {
+                this.grid.toggleCellByWorld(targetX, targetY);
+                return;
+            }
+            // otherwise try to find a path through unmarked cells
+            if (typeof this.grid.findPathWorld === 'function') {
+                const path = this.grid.findPathWorld(this.playerPosition.x, this.playerPosition.y, targetX, targetY);
+                if (path && path.length) {
+                    this.animateAlongPath(path);
+                    return;
                 }
+                // no path found -> do nothing
                 return;
             }
         }
@@ -64,6 +71,44 @@ class LaLanterne {
         if (this.isValidPosition(targetX, targetY)) {
             this.animatePlayerMovement(targetX, targetY);
         }
+    }
+
+    animateAlongPath(path) {
+        if (!path || !path.length) return;
+        this.isMoving = true;
+        let index = 0;
+        const stepTo = (tx, ty, cb) => {
+            const startX = this.playerPosition.x;
+            const startY = this.playerPosition.y;
+            const distance = Math.hypot(tx - startX, ty - startY);
+            const duration = Math.max(80, Math.min(distance * 4, 400));
+            const startTime = performance.now();
+            const animate = (now) => {
+                const elapsed = now - startTime;
+                const p = Math.min(1, elapsed / duration);
+                this.playerPosition.x = startX + (tx - startX) * p;
+                this.playerPosition.y = startY + (ty - startY) * p;
+                this.updatePlayerPosition();
+                if (p < 1) requestAnimationFrame(animate);
+                else cb();
+            };
+            requestAnimationFrame(animate);
+        };
+
+        const next = () => {
+            if (index >= path.length) {
+                this.isMoving = false;
+                return;
+            }
+            const p = path[index++];
+            // ensure target cell still unmarked
+            if (this.grid && this.grid.isCellMarkedByWorld(p.x, p.y)) {
+                this.isMoving = false;
+                return;
+            }
+            stepTo(p.x, p.y, next);
+        };
+        next();
     }
 
     isValidPosition(x, y) {
