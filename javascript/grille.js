@@ -5,7 +5,7 @@ class Grille {
         this.allowedCells = new Set();
         this.gridCanvas = null;
         this.editable = true; // when true, user can toggle marks by clicking
-        this.enforceObstacles = false; // when true, marked cells are treated as blocking
+        this.enforceObstacles = true; // when true, marked cells are treated as blocking
         this.createGridOverlay();
         this.storageKey = 'laLanterne.allowedCells.' + (window.location.pathname || 'default');
         this.loadAllowed();

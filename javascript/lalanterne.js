@@ -50,16 +50,14 @@ class LaLanterne {
                 if (!this.grid) return;
                 const visible = this.grid.gridCanvas && this.grid.gridCanvas.style.display !== 'none';
                 if (visible) {
-                    // disable: hide overlay, enforce obstacles, disable editing
+                    // hide overlay and disable editing (marks remain obstacles)
                     this.grid.hide();
                     this.grid.setEditable(false);
-                    this.grid.setEnforceObstacles(true);
                     btn.textContent = 'Activer la grille';
                 } else {
-                    // enable: show overlay, allow editing, do not enforce obstacles
+                    // show overlay and enable editing (marks still act as obstacles)
                     this.grid.show();
                     this.grid.setEditable(true);
-                    this.grid.setEnforceObstacles(false);
                     btn.textContent = 'Désactiver la grille';
                 }
             });
@@ -86,16 +84,13 @@ class LaLanterne {
             const playerCell = this.grid.worldToGrid(this.playerPosition.x, this.playerPosition.y);
             const allowedSize = this.grid.allowedCells ? this.grid.allowedCells.size : 0;
             console.debug('[LaLanterne] clickedGrid=', clicked, 'playerGrid=', playerCell, 'allowedCount=', allowedSize);
-            const clickedIsMarked = this.grid.isCellMarkedByWorld(targetX, targetY);
-            console.debug('[LaLanterne] clickedIsMarked=', clickedIsMarked);
-            if (clickedIsMarked) {
-                // only allow manual toggling when grid is editable
-                if (this.grid.editable) {
-                    this.grid.toggleCellByWorld(targetX, targetY);
-                }
+            // If grid is editable (editing mode), toggle mark under cursor
+            if (this.grid.editable) {
+                this.grid.toggleCellByWorld(targetX, targetY);
                 return;
             }
-            // otherwise try to find a path through unmarked cells
+
+            // Not in editing mode -> attempt movement (marked cells are obstacles)
             if (typeof this.grid.findPathWorld === 'function') {
                 console.debug('[LaLanterne] calling findPathWorld...');
                 const path = this.grid.findPathWorld(this.playerPosition.x, this.playerPosition.y, targetX, targetY);
@@ -104,7 +99,6 @@ class LaLanterne {
                     this.animateAlongPath(path);
                     return;
                 }
-                // no path found -> do nothing
                 console.debug('[LaLanterne] no path found to target');
                 return;
             }
@@ -145,9 +139,7 @@ class LaLanterne {
             const p = path[index++];
             // move to next cell and mark it after arrival
             stepTo(p.x, p.y, () => {
-                if (this.grid && typeof this.grid.markCellByWorld === 'function') {
-                    this.grid.markCellByWorld(p.x, p.y);
-                }
+                // do not mark cells during movement anymore
                 next();
             });
         };
