@@ -24,8 +24,21 @@ class LaLanterne {
         this.player = document.getElementById('player');
         this.apartment = document.getElementById('apartment');
         // grille superposée (gérée par javascript/grille.js)
+        // Determine whether admin UI should be enabled (local dev on :5500)
+        const isLocalHost = ['127.0.0.1', 'localhost', '::1'].includes(window.location.hostname);
+        const isLiveServer5500 = window.location.port === '5500';
+        this._showAdminUI = isLocalHost && isLiveServer5500;
         if (window.Grille) {
             this.grid = new Grille(this.apartment, 30);
+            // If not in admin UI mode, hide the overlay and disable editing so clicks move the player
+            if (!this._showAdminUI) {
+                try {
+                    this.grid.hide();
+                    this.grid.setEditable(false);
+                } catch (e) {
+                    console.warn('[LaLanterne] failed to set grid mode', e);
+                }
+            }
         }
         // cases autorisées marquées par l'utilisateur (dans `this.grid` si disponible)
         
