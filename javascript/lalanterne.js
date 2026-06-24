@@ -48,22 +48,31 @@ class LaLanterne {
         const rect = this.apartment.getBoundingClientRect();
         const targetX = event.clientX - rect.left - 15;
         const targetY = event.clientY - rect.top - 15;
+        console.debug('[LaLanterne] movePlayer clicked world=', { targetX, targetY });
         
         // if clicked cell is marked (yellow), toggle it and do not move
         if (this.grid && typeof this.grid.worldToGrid === 'function') {
             const clicked = this.grid.worldToGrid(targetX, targetY);
-            if (this.grid.isCellMarkedByWorld(targetX, targetY)) {
+            const playerCell = this.grid.worldToGrid(this.playerPosition.x, this.playerPosition.y);
+            const allowedSize = this.grid.allowedCells ? this.grid.allowedCells.size : 0;
+            console.debug('[LaLanterne] clickedGrid=', clicked, 'playerGrid=', playerCell, 'allowedCount=', allowedSize);
+            const clickedIsMarked = this.grid.isCellMarkedByWorld(targetX, targetY);
+            console.debug('[LaLanterne] clickedIsMarked=', clickedIsMarked);
+            if (clickedIsMarked) {
                 this.grid.toggleCellByWorld(targetX, targetY);
                 return;
             }
             // otherwise try to find a path through unmarked cells
             if (typeof this.grid.findPathWorld === 'function') {
+                console.debug('[LaLanterne] calling findPathWorld...');
                 const path = this.grid.findPathWorld(this.playerPosition.x, this.playerPosition.y, targetX, targetY);
+                console.debug('[LaLanterne] findPathWorld returned', path);
                 if (path && path.length) {
                     this.animateAlongPath(path);
                     return;
                 }
                 // no path found -> do nothing
+                console.debug('[LaLanterne] no path found to target');
                 return;
             }
         }
@@ -101,12 +110,13 @@ class LaLanterne {
                 return;
             }
             const p = path[index++];
-            // ensure target cell still unmarked
-            if (this.grid && this.grid.isCellMarkedByWorld(p.x, p.y)) {
-                this.isMoving = false;
-                return;
-            }
-            stepTo(p.x, p.y, next);
+            // move to next cell and mark it after arrival
+            stepTo(p.x, p.y, () => {
+                if (this.grid && typeof this.grid.markCellByWorld === 'function') {
+                    this.grid.markCellByWorld(p.x, p.y);
+                }
+                next();
+            });
         };
         next();
     }
@@ -149,10 +159,7 @@ class LaLanterne {
     updatePlayerPosition() {
         this.player.style.left = this.playerPosition.x + 'px';
         this.player.style.top = this.playerPosition.y + 'px';
-        // marquer la case sous le joueur comme autorisée via l'instance Grille
-        if (this.grid && typeof this.grid.markCellByWorld === 'function') {
-            this.grid.markCellByWorld(this.playerPosition.x, this.playerPosition.y);
-        }
+        // no automatic marking here; marking happens when moving along a path
     }
 }
 
