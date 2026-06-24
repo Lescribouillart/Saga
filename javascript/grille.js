@@ -4,9 +4,19 @@ class Grille {
         this.gridCellSize = cellSize;
         this.allowedCells = new Set();
         this.gridCanvas = null;
+        this.editable = true; // when true, user can toggle marks by clicking
+        this.enforceObstacles = false; // when true, marked cells are treated as blocking
         this.createGridOverlay();
         this.storageKey = 'laLanterne.allowedCells.' + (window.location.pathname || 'default');
         this.loadAllowed();
+    }
+
+    setEditable(value) {
+        this.editable = !!value;
+    }
+
+    setEnforceObstacles(value) {
+        this.enforceObstacles = !!value;
     }
 
     createGridOverlay() {
@@ -132,8 +142,11 @@ class Grille {
         console.debug('[Grille] findPathWorld start=', start, 'goal=', goal, 'markedCount=', this.allowedCells.size);
 
         const key = (x, y) => x + ',' + y;
-        // All cells are walkable — visual marks are informational only
-        const isWalkable = (x, y) => true;
+        // Determine walkability depending on enforceObstacles flag
+        const isWalkable = (x, y) => {
+            if (this.enforceObstacles) return !this.allowedCells.has(key(x, y));
+            return true;
+        };
 
         if (!isWalkable(goal.gx, goal.gy)) {
             console.debug('[Grille] goal not walkable', goal);

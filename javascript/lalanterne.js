@@ -34,6 +34,36 @@ class LaLanterne {
         
         // Gestionnaires d'événements
         this.apartment.addEventListener('click', (e) => this.movePlayer(e));
+
+        // Create grid toggle button next to title
+        const header = document.querySelector('.game-header');
+        if (header) {
+            const btn = document.createElement('button');
+            btn.id = 'gridToggleBtn';
+            btn.textContent = 'Désactiver la grille';
+            btn.style.marginLeft = '12px';
+            btn.style.padding = '6px 10px';
+            btn.style.fontSize = '0.9rem';
+            btn.style.cursor = 'pointer';
+            header.appendChild(btn);
+            btn.addEventListener('click', () => {
+                if (!this.grid) return;
+                const visible = this.grid.gridCanvas && this.grid.gridCanvas.style.display !== 'none';
+                if (visible) {
+                    // disable: hide overlay, enforce obstacles, disable editing
+                    this.grid.hide();
+                    this.grid.setEditable(false);
+                    this.grid.setEnforceObstacles(true);
+                    btn.textContent = 'Activer la grille';
+                } else {
+                    // enable: show overlay, allow editing, do not enforce obstacles
+                    this.grid.show();
+                    this.grid.setEditable(true);
+                    this.grid.setEnforceObstacles(false);
+                    btn.textContent = 'Désactiver la grille';
+                }
+            });
+        }
     }
 
     // grille overlay and helpers have been moved to javascript/grille.js (class Grille)
@@ -59,7 +89,10 @@ class LaLanterne {
             const clickedIsMarked = this.grid.isCellMarkedByWorld(targetX, targetY);
             console.debug('[LaLanterne] clickedIsMarked=', clickedIsMarked);
             if (clickedIsMarked) {
-                this.grid.toggleCellByWorld(targetX, targetY);
+                // only allow manual toggling when grid is editable
+                if (this.grid.editable) {
+                    this.grid.toggleCellByWorld(targetX, targetY);
+                }
                 return;
             }
             // otherwise try to find a path through unmarked cells
