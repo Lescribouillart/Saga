@@ -349,16 +349,29 @@ class LaLanterne {
        CONTRÔLE CLAVIER — touche maintenue = mouvement continu
        -------------------------------------------------- */
     _onKeyDown(e) {
-        const dirs = { ArrowUp: {dx:0,dy:-1}, ArrowDown: {dx:0,dy:1}, ArrowLeft: {dx:-1,dy:0}, ArrowRight: {dx:1,dy:0} };
-        const dir = dirs[e.key];
+        const dirs = {
+            ArrowUp:    {dx:0,dy:-1},
+            ArrowDown:  {dx:0,dy:1},
+            ArrowLeft:  {dx:-1,dy:0},
+            ArrowRight: {dx:1,dy:0},
+            // AZERTY-friendly keys (ZQSD)
+            z: {dx:0,dy:-1},
+            s: {dx:0,dy:1},
+            q: {dx:-1,dy:0},
+            d: {dx:1,dy:0}
+        };
+        // Normalize single-character keys to lowercase so Shift/CapsLock won't break mappings
+        const key = (e.key && e.key.length === 1) ? e.key.toLowerCase() : e.key;
+        const dir = dirs[key];
         if (!dir) return;
         e.preventDefault();
-        this._keysHeld[e.key] = dir;
+        this._keysHeld[key] = dir;
         this._tryKeyMove();
     }
 
     _onKeyUp(e) {
-        delete this._keysHeld[e.key];
+        const key = (e.key && e.key.length === 1) ? e.key.toLowerCase() : e.key;
+        delete this._keysHeld[key];
         if (!Object.keys(this._keysHeld).length && !this.isMoving) {
             this._isPlayerAnimating = false;
             this._showSprite(false);
