@@ -3,6 +3,30 @@
   outline: none !important;
 }
 
+/* ---------------------------------
+   Overlay pour bloquer mobile/tablette
+   (extrait depuis index.html)
+   --------------------------------- */
+#mobileBlock {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  color: #fff;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+#mobileBlock .box {
+  max-width: 720px;
+}
+
+/* Note: l'affichage effectif est contrôlé par `js/mobile-block.js` */
+
 *:focus {
   outline: none !important;
   box-shadow: none !important;

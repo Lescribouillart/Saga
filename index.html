@@ -4,22 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le pub La lanterne</title>
-    <script>
-        window.__braveReady = (async function() {
-            try {
-                if (navigator.brave && typeof navigator.brave.isBrave === 'function') {
-                    return await navigator.brave.isBrave();
-                }
-                return false;
-            } catch (e) {
-                return false;
-            }
-        })();
-    </script>
+    <script src="js/brave-detect.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/dialogue.css">
+    <script src="js/mobile-block.js"></script>
 </head>
 <body style="cursor: url('images/pointeur.png'), default;">
+    <div id="mobileBlock" role="dialog" aria-modal="true">
+        <div class="box">
+            <h1>Version mobile indisponible</h1>
+            <p>Le jeu n'est pas encore accessible depuis un téléphone ou une tablette. Merci de revenir depuis un ordinateur de bureau pour y jouer.</p>
+        </div>
+    </div>
     <div class="game-container">
         <div class="game-header">
             <h2>Le pub La Lanterne</h2>

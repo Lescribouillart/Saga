@@ -416,6 +416,11 @@ class LaLanterne {
    INITIALISATION GLOBALE
    ======================================== */
 document.addEventListener('DOMContentLoaded', async () => {
+    // If page flagged as mobile/tablet, do not initialize the game here.
+    if (window.__isMobileOrTablet) {
+        console.info('[LaLanterne] initialization skipped on mobile/tablet');
+        return;
+    }
     // En local sur le serveur de dev (:5500) : pas de blocage pour pouvoir travailler
     const isLocalDev = ['127.0.0.1', 'localhost', '::1'].includes(window.location.hostname)
                     && window.location.port === '5500';
