@@ -52,6 +52,10 @@ class LaLanterne {
         
         // Gestionnaires d'événements
         this.apartment.addEventListener('click', (e) => this.movePlayer(e));
+        // Keyboard controls: arrow keys
+        this._keyboardStep = 30; // pixels per key press
+        this._keyDownHandler = (e) => this._handleKey(e);
+        document.addEventListener('keydown', this._keyDownHandler);
 
         // Create grid toggle button next to title (only shown on local dev server)
         const header = document.querySelector('.game-header');
@@ -313,6 +317,47 @@ class LaLanterne {
             this.playerImg.src = '';
         }
         this.playerImg.src = src;
+    }
+
+    _handleKey(e) {
+        const key = e.key || e.code;
+        const step = this._keyboardStep || 30;
+        let dx = 0, dy = 0;
+        if (key === 'ArrowUp' || key === 'Up') dy = -step;
+        else if (key === 'ArrowDown' || key === 'Down') dy = step;
+        else if (key === 'ArrowLeft' || key === 'Left') dx = -step;
+        else if (key === 'ArrowRight' || key === 'Right') dx = step;
+        else return; // not an arrow key
+
+        e.preventDefault();
+
+        // if already moving, ignore this keypress
+        if (this.isMoving) return;
+
+        // set orientation immediately
+        this.setPlayerDirection(dx, dy);
+
+        const targetX = this.playerPosition.x + dx;
+        const targetY = this.playerPosition.y + dy;
+        if (!this.isValidPosition(targetX, targetY)) return;
+        // If grid exists and enforces obstacles, prevent moving into marked cells
+        if (this.grid && this.grid.enforceObstacles) {
+            if (typeof this.grid.isCellMarkedByWorld === 'function' && this.grid.isCellMarkedByWorld(targetX, targetY)) {
+                // blocked by obstacle
+                return;
+            }
+            // as extra safety, also ensure there's a path (prevents diagonal corner-cutting if needed)
+            if (typeof this.grid.findPathWorld === 'function') {
+                const path = this.grid.findPathWorld(this.playerPosition.x, this.playerPosition.y, targetX, targetY);
+                if (!path || !path.length) return;
+                // if path length > 1, follow path to avoid teleporting through obstacles
+                if (path.length > 1) {
+                    this.animateAlongPath(path);
+                    return;
+                }
+            }
+        }
+        this.animatePlayerMovement(targetX, targetY);
     }
 }
 
