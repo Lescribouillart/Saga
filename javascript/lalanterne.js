@@ -22,6 +22,7 @@ class LaLanterne {
         
         // Références aux éléments DOM
         this.player = document.getElementById('player');
+        this.playerImg = document.getElementById('playerImg');
         this.apartment = document.getElementById('apartment');
         // grille superposée (gérée par javascript/grille.js)
         // Determine whether admin UI should be enabled (local dev on :5500)
@@ -184,6 +185,8 @@ class LaLanterne {
         const stepTo = (tx, ty, cb) => {
             const startX = this.playerPosition.x;
             const startY = this.playerPosition.y;
+            // Set orientation based on next step
+            this.setPlayerDirection(tx - startX, ty - startY);
             const distance = Math.hypot(tx - startX, ty - startY);
             const duration = Math.max(80, Math.min(distance * 4, 400));
             const startTime = performance.now();
@@ -224,6 +227,8 @@ class LaLanterne {
         this.isMoving = true;
         const startX = this.playerPosition.x;
         const startY = this.playerPosition.y;
+        // Update orientation according to movement vector
+        this.setPlayerDirection(targetX - startX, targetY - startY);
         const distance = Math.sqrt((targetX - startX) ** 2 + (targetY - startY) ** 2);
         const duration = Math.min(distance * 2, 1000);
         
@@ -253,6 +258,32 @@ class LaLanterne {
         this.player.style.left = this.playerPosition.x + 'px';
         this.player.style.top = this.playerPosition.y + 'px';
         // no automatic marking here; marking happens when moving along a path
+    }
+
+    setPlayerDirection(dx, dy) {
+        if (!this.playerImg) return;
+        let dir = 'bas';
+        if (Math.abs(dx) > Math.abs(dy)) {
+            dir = dx > 0 ? 'droite' : 'gauche';
+        } else {
+            dir = dy > 0 ? 'bas' : 'haut';
+        }
+        const base = 'gifs/drelall/';
+        const map = {
+            bas: 'marchebas.gif',
+            droite: 'marchedroite.gif',
+            gauche: 'marchegauche.gif',
+            haut: 'marchehaut.gif'
+        };
+        const file = map[dir] || map.bas;
+        const src = base + file;
+        try {
+            if (!this.playerImg.src || this.playerImg.src.indexOf(file) === -1) {
+                this.playerImg.src = src;
+            }
+        } catch (e) {
+            // ignore
+        }
     }
 }
 

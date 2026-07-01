@@ -3345,6 +3345,13 @@ form select,
     animation: characterGlow 2s ease-in-out infinite alternate;
 }
 
+.character img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
 @keyframes characterGlow {
     from { filter: drop-shadow(0 0 3px #d4af37); }
     to { filter: drop-shadow(0 0 8px #ffd700); }
