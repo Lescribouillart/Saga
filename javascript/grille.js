@@ -281,14 +281,24 @@ class Grille {
             // If nothing in localStorage, try to fetch a repository-provided file
             // so that edits done with the grid can be applied project-wide.
             try {
-                fetch('data/obstacles.json').then(r => {
-                    if (!r.ok) return;
-                    return r.json();
-                }).then(arr => {
-                    if (!arr) return;
-                    this.allowedCells = new Set(arr);
-                    if (this.gridCanvas) this.updateGridOverlay();
-                }).catch(() => {});
+                // Try multiple candidate files (some deployments use obstacles2.json)
+                (async () => {
+                    const candidates = ['data/obstacles.json', 'data/obstacles2.json'];
+                    for (const path of candidates) {
+                        try {
+                            const r = await fetch(path);
+                            if (!r.ok) continue;
+                            const arr = await r.json();
+                            if (!arr) continue;
+                            this.allowedCells = new Set(arr);
+                            if (this.gridCanvas) this.updateGridOverlay();
+                            return;
+                        } catch (e) {
+                            // try next candidate
+                            continue;
+                        }
+                    }
+                })();
             } catch (e) {
                 // ignore fetch errors (file absent or CORS)
             }
