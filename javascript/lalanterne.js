@@ -424,7 +424,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const wrapper = document.createElement('div');
         wrapper.style.cssText = 'min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#0b1220;color:#fff;font-family:Helvetica,Arial,sans-serif;';
         wrapper.innerHTML = `<div style="max-width:480px;text-align:center;">
-            <p style="font-size:1.1rem;opacity:0.9;">Ce site est uniquement accessible via le navigateur <strong>Brave</strong>.<br>Téléchargez-le gratuitement sur <a href="https://brave.com/" style="color:#9ad1ff;">brave.com</a>.</p>
+            <p style="font-size:1.1rem;opacity:0.9;">Pour le moment, La résidence des Granfont est uniquement accessible via le navigateur <strong>Brave</strong>.<br>Téléchargez-le gratuitement sur <a href="https://brave.com/" style="color:#9ad1ff;">brave.com</a>.</p>
         </div>`;
         document.body && document.body.appendChild(wrapper);
         return;
