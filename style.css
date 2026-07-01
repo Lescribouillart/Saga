@@ -3334,8 +3334,8 @@ form select,
 
 .character {
     position: absolute;
-  width: 39px;
-  height: 39px;
+  width: 49px;
+  height: 49px;
     z-index: 100;
     transition: none;
 }
