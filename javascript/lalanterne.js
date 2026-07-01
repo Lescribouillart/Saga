@@ -45,6 +45,10 @@ class LaLanterne {
         
         // Positionner le joueur
         this.updatePlayerPosition();
+        // Etat de sprite initial : immobile face au bas
+        this._isPlayerAnimating = false;
+        this._lastDirection = 'bas';
+        this._showSprite(false);
         
         // Gestionnaires d'événements
         this.apartment.addEventListener('click', (e) => this.movePlayer(e));
@@ -181,6 +185,8 @@ class LaLanterne {
     animateAlongPath(path) {
         if (!path || !path.length) return;
         this.isMoving = true;
+        this._isPlayerAnimating = true;
+        this._showSprite(true);
         let index = 0;
         const stepTo = (tx, ty, cb) => {
             const startX = this.playerPosition.x;
@@ -205,6 +211,8 @@ class LaLanterne {
         const next = () => {
             if (index >= path.length) {
                 this.isMoving = false;
+                this._isPlayerAnimating = false;
+                this._showSprite(false);
                 return;
             }
             const p = path[index++];
@@ -229,6 +237,8 @@ class LaLanterne {
         const startY = this.playerPosition.y;
         // Update orientation according to movement vector
         this.setPlayerDirection(targetX - startX, targetY - startY);
+        this._isPlayerAnimating = true;
+        this._showSprite(true);
         const distance = Math.sqrt((targetX - startX) ** 2 + (targetY - startY) ** 2);
         const duration = Math.min(distance * 2, 1000);
         
@@ -248,6 +258,8 @@ class LaLanterne {
                 requestAnimationFrame(animate);
             } else {
                 this.isMoving = false;
+                this._isPlayerAnimating = false;
+                this._showSprite(false);
             }
         };
         
@@ -268,22 +280,35 @@ class LaLanterne {
         } else {
             dir = dy > 0 ? 'bas' : 'haut';
         }
-        const base = 'gifs/drelall/';
-        const map = {
-            bas: 'marchebas.gif',
-            droite: 'marchedroite.gif',
-            gauche: 'marchegauche.gif',
-            haut: 'marchehaut.gif'
+        this._lastDirection = dir;
+        // L'image sera mise à jour par _showSprite() après cet appel
+    }
+
+    /* -------------------------------------------------
+       GIFS_ANIMÉS   gifs/drelall/*.gif
+       IMAGES_FIXES  gifs/drelallfix/*.png
+       ------------------------------------------------- */
+    _showSprite(animating) {
+        if (!this.playerImg) return;
+        const dir = this._lastDirection || 'bas';
+        const GIF = {
+            bas:    'gifs/drelall/marchebas.gif',
+            droite: 'gifs/drelall/marchedroite.gif',
+            gauche: 'gifs/drelall/marchegauche.gif',
+            haut:   'gifs/drelall/marchehaut.gif'
         };
-        const file = map[dir] || map.bas;
-        const src = base + file;
-        try {
-            if (!this.playerImg.src || this.playerImg.src.indexOf(file) === -1) {
-                this.playerImg.src = src;
-            }
-        } catch (e) {
-            // ignore
+        const FIX = {
+            bas:    'gifs/drelallfix/marchebf.png',
+            droite: 'gifs/drelallfix/marchedf.png',
+            gauche: 'gifs/drelallfix/marchegf.png',
+            haut:   'gifs/drelallfix/marchehf.png'
+        };
+        const src = animating ? (GIF[dir] || GIF.bas) : (FIX[dir] || FIX.bas);
+        // Forcer le rechargement du GIF à chaque départ (repart depuis frame 1)
+        if (animating) {
+            this.playerImg.src = '';
         }
+        this.playerImg.src = src;
     }
 }
 
