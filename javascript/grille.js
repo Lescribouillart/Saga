@@ -281,7 +281,7 @@ class Grille {
             // If nothing in localStorage, try to fetch a repository-provided file
             // so that edits done with the grid can be applied project-wide.
             try {
-                fetch('data/obstacles.json').then(r => {
+                fetch('data/obstacles2.json').then(r => {
                     if (!r.ok) return;
                     return r.json();
                 }).then(arr => {
