@@ -27,6 +27,60 @@
 
 /* Note: l'affichage effectif est contrôlé par `js/mobile-block.js` */
 
+/* ================================
+   Responsive: mobile / tablette
+   Bloque l'accès et adapte le rendu
+   ================================ */
+@media (max-width: 1024px) {
+  /* Afficher l'overlay en CSS au cas où JS est désactivé */
+  #mobileBlock {
+    display: flex !important;
+  }
+
+  /* Empêcher toute interaction avec le jeu */
+  .game-container {
+    filter: blur(1px);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Limiter le scrolling de la page pour l'overlay */
+  body {
+    overflow: hidden;
+  }
+
+  /* Adapter la zone de jeu sur écrans plus petits */
+  .apartment-container {
+    background-size: cover;
+    background-position: center;
+    min-height: 60vh;
+    margin: 10px;
+    border-radius: 6px;
+  }
+
+  .game-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .character {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 600px) {
+  #mobileBlock {
+    padding: 1rem !important;
+  }
+  #mobileBlock .box h1 {
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+  }
+  #mobileBlock .box p {
+    font-size: 0.95rem;
+  }
+}
+
 *:focus {
   outline: none !important;
   box-shadow: none !important;
