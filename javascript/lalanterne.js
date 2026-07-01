@@ -52,10 +52,10 @@ class LaLanterne {
         
         // Gestionnaires d'événements
         this.apartment.addEventListener('click', (e) => this.movePlayer(e));
-        // Keyboard controls: arrow keys
-        this._keyboardStep = 30; // pixels per key press
-        this._keyDownHandler = (e) => this._handleKey(e);
-        document.addEventListener('keydown', this._keyDownHandler);
+        // Clavier : suivi des touches maintenues pour mouvement continu et fluide
+        this._keysHeld = {};
+        document.addEventListener('keydown', (e) => this._onKeyDown(e));
+        document.addEventListener('keyup',   (e) => this._onKeyUp(e));
 
         // Create grid toggle button next to title (only shown on local dev server)
         const header = document.querySelector('.game-header');
@@ -216,7 +216,11 @@ class LaLanterne {
             if (index >= path.length) {
                 this.isMoving = false;
                 this._isPlayerAnimating = false;
-                this._showSprite(false);
+                if (this._keysHeld && Object.keys(this._keysHeld).length) {
+                    this._tryKeyMove();
+                } else {
+                    this._showSprite(false);
+                }
                 return;
             }
             const p = path[index++];
@@ -244,7 +248,8 @@ class LaLanterne {
         this._isPlayerAnimating = true;
         this._showSprite(true);
         const distance = Math.sqrt((targetX - startX) ** 2 + (targetY - startY) ** 2);
-        const duration = Math.min(distance * 2, 1000);
+        // Même durée qu'animateAlongPath pour un mouvement cohérent
+        const duration = Math.max(80, Math.min(distance * 4, 400));
         
         const startTime = performance.now();
         
@@ -263,7 +268,12 @@ class LaLanterne {
             } else {
                 this.isMoving = false;
                 this._isPlayerAnimating = false;
-                this._showSprite(false);
+                // Enchaîner immédiatement si une touche est encore enfoncée
+                if (this._keysHeld && Object.keys(this._keysHeld).length) {
+                    this._tryKeyMove();
+                } else {
+                    this._showSprite(false);
+                }
             }
         };
         
@@ -312,50 +322,53 @@ class LaLanterne {
             haut:   'gifs/drelallfix/marchehf.png'
         };
         const src = animating ? (GIF[dir] || GIF.bas) : (FIX[dir] || FIX.bas);
-        // Forcer le rechargement du GIF à chaque départ (repart depuis frame 1)
-        if (animating) {
-            this.playerImg.src = '';
+        // Ne recharger que si la source a réellement changé (évite tout flash)
+        if (!this.playerImg.src.endsWith(src)) {
+            this.playerImg.src = src;
         }
-        this.playerImg.src = src;
     }
 
-    _handleKey(e) {
-        const key = e.key || e.code;
-        const step = this._keyboardStep || 30;
-        let dx = 0, dy = 0;
-        if (key === 'ArrowUp' || key === 'Up') dy = -step;
-        else if (key === 'ArrowDown' || key === 'Down') dy = step;
-        else if (key === 'ArrowLeft' || key === 'Left') dx = -step;
-        else if (key === 'ArrowRight' || key === 'Right') dx = step;
-        else return; // not an arrow key
-
+    /* --------------------------------------------------
+       CONTRÔLE CLAVIER — touche maintenue = mouvement continu
+       -------------------------------------------------- */
+    _onKeyDown(e) {
+        const dirs = { ArrowUp: {dx:0,dy:-1}, ArrowDown: {dx:0,dy:1}, ArrowLeft: {dx:-1,dy:0}, ArrowRight: {dx:1,dy:0} };
+        const dir = dirs[e.key];
+        if (!dir) return;
         e.preventDefault();
+        this._keysHeld[e.key] = dir;
+        this._tryKeyMove();
+    }
 
-        // if already moving, ignore this keypress
+    _onKeyUp(e) {
+        delete this._keysHeld[e.key];
+        if (!Object.keys(this._keysHeld).length && !this.isMoving) {
+            this._isPlayerAnimating = false;
+            this._showSprite(false);
+        }
+    }
+
+    _tryKeyMove() {
         if (this.isMoving) return;
+        const held = Object.values(this._keysHeld);
+        if (!held.length) return;
 
-        // set orientation immediately
+        const step = 30;
+        const dir = held[held.length - 1];
+        const dx = dir.dx * step;
+        const dy = dir.dy * step;
+
         this.setPlayerDirection(dx, dy);
 
         const targetX = this.playerPosition.x + dx;
         const targetY = this.playerPosition.y + dy;
         if (!this.isValidPosition(targetX, targetY)) return;
-        // If grid exists and enforces obstacles, prevent moving into marked cells
-        if (this.grid && this.grid.enforceObstacles) {
-            if (typeof this.grid.isCellMarkedByWorld === 'function' && this.grid.isCellMarkedByWorld(targetX, targetY)) {
-                // blocked by obstacle
-                return;
-            }
-            // as extra safety, also ensure there's a path (prevents diagonal corner-cutting if needed)
-            if (typeof this.grid.findPathWorld === 'function') {
-                const path = this.grid.findPathWorld(this.playerPosition.x, this.playerPosition.y, targetX, targetY);
-                if (!path || !path.length) return;
-                // if path length > 1, follow path to avoid teleporting through obstacles
-                if (path.length > 1) {
-                    this.animateAlongPath(path);
-                    return;
-                }
-            }
+
+        // Bloquer si la case cible est un obstacle
+        if (this.grid && this.grid.enforceObstacles &&
+            typeof this.grid.isCellMarkedByWorld === 'function' &&
+            this.grid.isCellMarkedByWorld(targetX, targetY)) {
+            return;
         }
         this.animatePlayerMovement(targetX, targetY);
     }
