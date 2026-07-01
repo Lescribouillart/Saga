@@ -3313,6 +3313,7 @@ form select,
     margin: 0;
     font-style: italic;
     opacity: 0.9;
+    margin-bottom: 13px;
 }
 
 .apartment-container {
