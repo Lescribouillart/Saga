@@ -2,6 +2,8 @@ class Grille {
     constructor(apartmentEl, cellSize = 30) {
         this.apartment = apartmentEl;
         this.gridCellSize = cellSize;
+        // half-size of the entity using the grid (defaults to half cell)
+        this.entityHalf = Math.floor(this.gridCellSize / 2);
         this.allowedCells = new Set();
         this.gridCanvas = null;
         this.editable = true; // when true, user can toggle marks by clicking
@@ -117,17 +119,19 @@ class Grille {
     }
 
     worldToGrid(x, y) {
-        const cx = x + this.gridCellSize / 2;
-        const cy = y + this.gridCellSize / 2;
+        // interpret x,y as top-left of the entity -> convert to entity center
+        const cx = x + this.entityHalf;
+        const cy = y + this.entityHalf;
         const gx = Math.max(0, Math.floor(cx / this.gridCellSize));
         const gy = Math.max(0, Math.floor(cy / this.gridCellSize));
         return { gx, gy };
     }
 
     gridToWorld(gx, gy) {
+        // return top-left coordinates so that entity is centered on the cell
         return {
-            x: gx * this.gridCellSize + this.gridCellSize / 2 - 15,
-            y: gy * this.gridCellSize + this.gridCellSize / 2 - 15
+            x: gx * this.gridCellSize + this.gridCellSize / 2 - this.entityHalf,
+            y: gy * this.gridCellSize + this.gridCellSize / 2 - this.entityHalf
         };
     }
 
@@ -143,8 +147,18 @@ class Grille {
 
         const key = (x, y) => x + ',' + y;
         // Determine walkability depending on enforceObstacles flag
+        // When entity is larger than 1 cell, ensure ALL covered cells are free
+        const radius = Math.max(0, Math.ceil(this.entityHalf / this.gridCellSize));
         const isWalkable = (x, y) => {
-            if (this.enforceObstacles) return !this.allowedCells.has(key(x, y));
+            if (!this.enforceObstacles) return true;
+            for (let dx = -radius; dx <= radius; dx++) {
+                for (let dy = -radius; dy <= radius; dy++) {
+                    const nx = x + dx;
+                    const ny = y + dy;
+                    if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) return false;
+                    if (this.allowedCells.has(key(nx, ny))) return false;
+                }
+            }
             return true;
         };
 
@@ -210,8 +224,16 @@ class Grille {
 
     isCellMarkedByWorld(x, y) {
         const g = this.worldToGrid(x, y);
-        const key = g.gx + ',' + g.gy;
-        return this.allowedCells.has(key);
+        const keyFn = (a, b) => a + ',' + b;
+        const radius = Math.max(0, Math.ceil(this.entityHalf / this.gridCellSize));
+        for (let dx = -radius; dx <= radius; dx++) {
+            for (let dy = -radius; dy <= radius; dy++) {
+                const nx = g.gx + dx;
+                const ny = g.gy + dy;
+                if (this.allowedCells.has(keyFn(nx, ny))) return true;
+            }
+        }
+        return false;
     }
 
     toggleCellByWorld(x, y) {

@@ -31,6 +31,20 @@ class LaLanterne {
         this._showAdminUI = isLocalHost && isLiveServer5500;
         if (window.Grille) {
             this.grid = new Grille(this.apartment, 30);
+            // Inform grid about current player size so hitbox math matches CSS
+            try {
+                const cs = window.getComputedStyle(this.player);
+                const w = parseInt(cs.width, 10) || this.grid.gridCellSize;
+                const h = parseInt(cs.height, 10) || this.grid.gridCellSize;
+                this.grid.entityHalf = Math.floor(Math.max(w, h) / 2);
+                // Snap initial player position to nearest grid center
+                const startG = this.grid.worldToGrid(this.playerPosition.x, this.playerPosition.y);
+                const startWorld = this.grid.gridToWorld(startG.gx, startG.gy);
+                this.playerPosition.x = startWorld.x;
+                this.playerPosition.y = startWorld.y;
+            } catch (e) {
+                // ignore; grid will use default entityHalf
+            }
             // If not in admin UI mode, hide the overlay and disable editing so clicks move the player
             if (!this._showAdminUI) {
                 try {
@@ -151,8 +165,11 @@ class LaLanterne {
         if (this.isMoving) return;
         
         const rect = this.apartment.getBoundingClientRect();
-        const targetX = event.clientX - rect.left - 15;
-        const targetY = event.clientY - rect.top - 15;
+        // compute target top-left according to entity half so worldToGrid maps to proper centre
+        let entityHalf = 15;
+        if (this.grid && this.grid.entityHalf) entityHalf = this.grid.entityHalf;
+        const targetX = event.clientX - rect.left - entityHalf;
+        const targetY = event.clientY - rect.top - entityHalf;
         console.debug('[LaLanterne] movePlayer clicked world=', { targetX, targetY });
         
         // if clicked cell is marked (yellow), toggle it and do not move
@@ -352,24 +369,32 @@ class LaLanterne {
         if (this.isMoving) return;
         const held = Object.values(this._keysHeld);
         if (!held.length) return;
-
-        const step = 30;
         const dir = held[held.length - 1];
+        // If grid is available, move to adjacent cell center instead of raw pixel step
+        if (this.grid && typeof this.grid.worldToGrid === 'function') {
+            const playerCell = this.grid.worldToGrid(this.playerPosition.x, this.playerPosition.y);
+            const nextGX = playerCell.gx + dir.dx;
+            const nextGY = playerCell.gy + dir.dy;
+            const rect = this.apartment.getBoundingClientRect();
+            const cols = Math.ceil(rect.width / this.grid.gridCellSize);
+            const rows = Math.ceil(rect.height / this.grid.gridCellSize);
+            if (nextGX < 0 || nextGY < 0 || nextGX >= cols || nextGY >= rows) return;
+            const targetWorld = this.grid.gridToWorld(nextGX, nextGY);
+            this.setPlayerDirection(targetWorld.x - this.playerPosition.x, targetWorld.y - this.playerPosition.y);
+            if (!this.isValidPosition(targetWorld.x, targetWorld.y)) return;
+            if (this.grid.enforceObstacles && typeof this.grid.isCellMarkedByWorld === 'function' && this.grid.isCellMarkedByWorld(targetWorld.x, targetWorld.y)) return;
+            this.animatePlayerMovement(targetWorld.x, targetWorld.y);
+            return;
+        }
+        // fallback: single-step in pixels
+        const step = 30;
         const dx = dir.dx * step;
         const dy = dir.dy * step;
-
         this.setPlayerDirection(dx, dy);
-
         const targetX = this.playerPosition.x + dx;
         const targetY = this.playerPosition.y + dy;
         if (!this.isValidPosition(targetX, targetY)) return;
-
-        // Bloquer si la case cible est un obstacle
-        if (this.grid && this.grid.enforceObstacles &&
-            typeof this.grid.isCellMarkedByWorld === 'function' &&
-            this.grid.isCellMarkedByWorld(targetX, targetY)) {
-            return;
-        }
+        if (this.grid && this.grid.enforceObstacles && typeof this.grid.isCellMarkedByWorld === 'function' && this.grid.isCellMarkedByWorld(targetX, targetY)) return;
         this.animatePlayerMovement(targetX, targetY);
     }
 }
