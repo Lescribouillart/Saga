@@ -402,6 +402,33 @@ class LaLanterne {
 /* ========================================
    INITIALISATION GLOBALE
    ======================================== */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // En local sur le serveur de dev (:5500) : pas de blocage pour pouvoir travailler
+    const isLocalDev = ['127.0.0.1', 'localhost', '::1'].includes(window.location.hostname)
+                    && window.location.port === '5500';
+    if (isLocalDev) {
+        window.laLanterne = new LaLanterne();
+        return;
+    }
+
+    // Sur le site déployé : accessible uniquement via Brave
+    let isBrave = false;
+    try {
+        if (window.__braveReady && typeof window.__braveReady.then === 'function') {
+            isBrave = await window.__braveReady;
+        }
+    } catch (e) { isBrave = false; }
+
+    if (!isBrave) {
+        document.documentElement.innerHTML = '';
+        const wrapper = document.createElement('div');
+        wrapper.style.cssText = 'min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#0b1220;color:#fff;font-family:Helvetica,Arial,sans-serif;';
+        wrapper.innerHTML = `<div style="max-width:480px;text-align:center;">
+            <p style="font-size:1.1rem;opacity:0.9;">Ce site est uniquement accessible via le navigateur <strong>Brave</strong>.<br>Téléchargez-le gratuitement sur <a href="https://brave.com/" style="color:#9ad1ff;">brave.com</a>.</p>
+        </div>`;
+        document.body && document.body.appendChild(wrapper);
+        return;
+    }
+
     window.laLanterne = new LaLanterne();
 });
