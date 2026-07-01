@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le pub La lanterne</title>
+    <!-- Brave detection: expose a promise window.__braveReady resolving to true/false -->
+    <script>
+        window.__braveReady = (async function() {
+            try {
+                if (navigator.brave && typeof navigator.brave.isBrave === 'function') {
+                    return await navigator.brave.isBrave();
+                }
+                if (navigator.userAgentData && Array.isArray(navigator.userAgentData.brands)) {
+                    try {
+                        return navigator.userAgentData.brands.some(b => /Brave/i.test(b.brand));
+                    } catch (e) { /* ignore */ }
+                }
+                return /Brave/i.test(navigator.userAgent || '');
+            } catch (e) {
+                return false;
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/dialogue.css">
 </head>

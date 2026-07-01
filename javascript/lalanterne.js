@@ -402,6 +402,33 @@ class LaLanterne {
 /* ========================================
    INITIALISATION GLOBALE
    ======================================== */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // Wait for Brave detection; default to false if not available
+    let isBrave = false;
+    try {
+        if (window.__braveReady && typeof window.__braveReady.then === 'function') {
+            isBrave = await window.__braveReady;
+        } else {
+            isBrave = false;
+        }
+    } catch (e) {
+        isBrave = false;
+    }
+
+    if (!isBrave) {
+        // Replace page content with an explanatory message for non‑Brave users
+        document.documentElement.innerHTML = '';
+        const wrapper = document.createElement('div');
+        wrapper.style.cssText = 'min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#0b1220;color:#fff;font-family:Helvetica,Arial,sans-serif;';
+        wrapper.innerHTML = `<div style="max-width:720px;text-align:center;">
+            <h1 style="margin-bottom:8px;font-size:1.6rem;">Site accessible uniquement via le navigateur Brave</h1>
+            <p style="opacity:0.9;margin-bottom:18px;">Pour des raisons de compatibilité (gestion des obstacles), ce jeu n'est disponible qu'avec Brave. Si vous utilisez un autre navigateur, veuillez ouvrir ce lien dans Brave ou télécharger Brave depuis <a href="https://brave.com/" style="color:#9ad1ff;">brave.com</a>.</p>
+            <p style="opacity:0.8;font-size:0.9rem">Si vous êtes l'auteur et voulez autoriser d'autres navigateurs, contactez le développeur ou modifiez la page pour activer le support multi-navigateurs.</p>
+        </div>`;
+        document.body && document.body.appendChild(wrapper);
+        // Stop further initialization
+        return;
+    }
+
     window.laLanterne = new LaLanterne();
 });
