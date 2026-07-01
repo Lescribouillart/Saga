@@ -280,8 +280,12 @@ class LaLanterne {
         } else {
             dir = dy > 0 ? 'bas' : 'haut';
         }
+        if (dir === this._lastDirection) return; // direction inchangée, rien à faire
         this._lastDirection = dir;
-        // L'image sera mise à jour par _showSprite() après cet appel
+        // Si déjà en mouvement, mettre à jour le GIF immédiatement
+        if (this._isPlayerAnimating) {
+            this._showSprite(true);
+        }
     }
 
     /* -------------------------------------------------
