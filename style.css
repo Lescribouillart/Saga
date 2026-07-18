@@ -3374,10 +3374,32 @@ form select,
 }
 
 .game-header {
-    text-align: center;
-    padding: 20px;
-    background: rgba(23, 46, 51);
-    border-bottom: 2px solid #192b39;
+  --logo-size: 72px;
+  position: relative;
+  text-align: center;
+  padding: 20px;
+  background: rgba(23, 46, 51);
+  border-bottom: 2px solid #192b39;
+}
+
+/* center group that keeps title centered and logo right next to it */
+.header-center {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.title-block {
+  text-align: center;
+}
+
+.game-header img.logo {
+  width: var(--logo-size);
+  height: var(--logo-size);
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
 }
 
 .game-header h2 {
@@ -3391,6 +3413,37 @@ form select,
     font-style: italic;
     opacity: 0.9;
     margin-bottom: 13px;
+}
+
+@media (max-width: 1024px) {
+  .game-header {
+    --logo-size: 64px;
+    padding: 20px;
+  }
+  
+  .game-header img.logo {
+    width: var(--logo-size);
+    height: var(--logo-size);
+  }
+}
+
+@media (max-width: 600px) {
+  .game-header {
+    --logo-size: 56px;
+    padding: 20px;
+  }
+  
+  .header-center {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .game-header img.logo {
+    width: var(--logo-size);
+    height: var(--logo-size);
+    margin: 0;
+    display: block;
+  }
 }
 
 .apartment-container {
