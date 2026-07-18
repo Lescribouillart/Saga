@@ -3393,6 +3393,13 @@ form select,
   text-align: center;
 }
 
+.header-buttons {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
 .game-header img.logo {
   width: var(--logo-size);
   height: var(--logo-size);

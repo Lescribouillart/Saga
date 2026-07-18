@@ -73,6 +73,7 @@ class LaLanterne {
 
         // Create grid toggle button next to title (only shown on local dev server)
         const header = document.querySelector('.game-header');
+        const headerButtonsContainer = header ? header.querySelector('.header-buttons') : null;
         if (header) {
             const isLocalHost = ['127.0.0.1', 'localhost', '::1'].includes(window.location.hostname);
             const isLiveServer5500 = window.location.port === '5500';
@@ -87,7 +88,7 @@ class LaLanterne {
                 btn.style.padding = '6px 10px';
                 btn.style.fontSize = '0.9rem';
                 btn.style.cursor = 'pointer';
-                header.appendChild(btn);
+                (headerButtonsContainer || header).appendChild(btn);
                 // Export / Import buttons
                 const exp = document.createElement('button');
                 exp.id = 'gridExportBtn';
@@ -96,14 +97,14 @@ class LaLanterne {
                 exp.style.padding = '6px 10px';
                 exp.style.fontSize = '0.9rem';
                 exp.style.cursor = 'pointer';
-                header.appendChild(exp);
+                (headerButtonsContainer || header).appendChild(exp);
 
                 const imp = document.createElement('input');
                 imp.type = 'file';
                 imp.accept = 'application/json';
                 imp.id = 'gridImportInput';
                 imp.style.display = 'none';
-                header.appendChild(imp);
+                (headerButtonsContainer || header).appendChild(imp);
 
                 const impBtn = document.createElement('button');
                 impBtn.id = 'gridImportBtn';
@@ -112,7 +113,7 @@ class LaLanterne {
                 impBtn.style.padding = '6px 10px';
                 impBtn.style.fontSize = '0.9rem';
                 impBtn.style.cursor = 'pointer';
-                header.appendChild(impBtn);
+                (headerButtonsContainer || header).appendChild(impBtn);
 
                 exp.addEventListener('click', () => {
                     if (!this.grid) return;
